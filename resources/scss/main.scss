@@ -1,5 +1,10 @@
 /**
  * Created by KlimMalgin on 25.10.2014.
  */
+
+@import "mixins";
  
- 
+.application {
+  @include absolute(0, 0, 0, 0);
+  background-color: #ccc;
+}
