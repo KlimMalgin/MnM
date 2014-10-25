@@ -48,7 +48,7 @@ var dest = {
     images: 'build/images'
 };
 
-var appUrl = 'http://localhost:7777';
+var appUrl = 'http://localhost:7878';
 
 gulp.task('minify-js', ['build'], function() {
     return gulp.src(dest.js + '/app.js')
@@ -136,7 +136,7 @@ gulp.task('watch', ['build'], function(cb) {
 gulp.task('build', ['sass', 'scripts', 'copy']);
 
 // The default task
-gulp.task('default', ['build', 'copy-html'/*, 'watch', 'server', 'open'*/]);
+gulp.task('default', ['build', 'copy-html', 'watch', 'server', 'open']);
 
 // Configure production target
 gulp.task('minify', ['minify-js', 'minify-css', 'process-html']);
