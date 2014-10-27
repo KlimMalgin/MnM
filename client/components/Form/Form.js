@@ -10,9 +10,13 @@ var Bootstrap = require('react-bootstrap'),
     Input = Bootstrap.Input,
     Button = Bootstrap.Button;
 
+var FormMixin = require('../../mixins/FormMixin');
+
 var TagField = require('../../plugins/TagField');
 
 var Form = React.createClass({
+
+    mixins: [FormMixin],
 
     handleClickButton: function () {
         console.log('handleClickButton');
