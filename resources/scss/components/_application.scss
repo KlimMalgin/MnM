@@ -1,13 +1,16 @@
 
 
+@import "form";
+@import "dashboard";
+
 .application {
-  @include size(100%);
+  @include size(100%, auto);
   min-height: 100%;
   margin: 0;
   padding: 0;
 
   .area {
-    @include size(990px);
+    @include size(990px, auto);
     min-height: 100%;
     margin: 0 auto;
     background-color: #ccc;
