@@ -3,8 +3,9 @@
  */
 
 @import "mixins";
- 
-.application {
-  @include absolute(0, 0, 0, 0);
-  background-color: #ccc;
+@import "components/application";
+
+body {
+  margin: 0;
+  padding: 0;
 }

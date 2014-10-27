@@ -16,7 +16,9 @@ var Application = React.createClass({
 
         return (
             <div className={cs(classes)}>
-                {this.props.activeRouteHandler()}
+                <div className="area">
+                    {this.props.activeRouteHandler()}
+                </div>
             </div>
         );
     }
