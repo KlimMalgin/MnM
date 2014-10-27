@@ -39,7 +39,6 @@ var TransactionForm = React.createClass({
         return (
             <div className="transaction-form">
                 <form>
-                    <Input type="text" placeholder="Категория" />
                     <TagField placeholder="Введите теги" tags={this.getTags()} />
                     <Input type="text" placeholder="Сумма" />
                     <Input type="textarea" placeholder="Описание" />
