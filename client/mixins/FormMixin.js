@@ -6,7 +6,7 @@
 var React = require('react'),
     mapObject = require('react/lib/mapObject');
 
-var pt = React.propTypes;
+var pt = React.PropTypes;
 
 var FormState = require('../constants/AppConstants').FormState;
 

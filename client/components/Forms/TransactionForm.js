@@ -14,7 +14,7 @@ var FormMixin = require('../../mixins/FormMixin');
 
 var TagField = require('../../plugins/TagField');
 
-var Form = React.createClass({
+var TransactionForm = React.createClass({
 
     mixins: [FormMixin],
 
@@ -45,4 +45,4 @@ var Form = React.createClass({
 
 });
 
-module.exports = Form;
+module.exports = TransactionForm;
