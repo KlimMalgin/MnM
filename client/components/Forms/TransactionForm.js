@@ -12,14 +12,23 @@ var Bootstrap = require('react-bootstrap'),
 
 var FormMixin = require('../../mixins/FormMixin');
 
+var FormModels = require('../../common/FormModels');
+
 var TagField = require('../../plugins/TagField');
 
 var TransactionForm = React.createClass({
 
     mixins: [FormMixin],
 
+    getDefaultProps : function () {
+        return {
+            formModel: FormModels.TransactionForm
+        }
+    },
+
     handleClickButton: function () {
-        console.log('handleClickButton');
+        console.log('Button::Click::CreateTransaction');
+        //UserActions.createTransaction(this.collectFormData());
     },
 
     getTags: function () {
