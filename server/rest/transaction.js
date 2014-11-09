@@ -4,15 +4,29 @@
 'use strict';
 
 var express = require('express');
-
 var transaction = express.Router();
+
+var transactionDb = require('../db/transaction');
 
 
 /**
  * Вернуть все транзакции пользователя
  */
 transaction.get('/transaction', function (req, res) {
-    res.send("GET: /transaction");
+
+    transactionDb.insert({
+        tags: {
+            categories: [],
+            accounts: []
+        },
+        cost: 1024,
+        description: "",
+        date: new Date()
+    }, function (err, resp) {
+        console.log("PARSE RESPONSE: ", err, resp);
+        res.send("GET: /transaction");
+    });
+
 });
 
 /**
@@ -37,6 +51,9 @@ transaction.get('/transaction/:id', function (req, res) {
  *
  */
 transaction.post('/transaction', function (req, res) {
+
+
+
     res.send("POST: /transaction/");
 });
 

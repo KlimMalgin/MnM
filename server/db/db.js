@@ -10,8 +10,15 @@
 
 var Parse = require('node-parse-api').Parse;
 var CFG = require('../config');
+var curry = require('core.lambda').curry;
 
 var db = new Parse(CFG.PARSE.APP_ID, CFG.PARSE.MASTER_KEY);
+
+
+
+var insert = curry(3, function (objectType, data, callback) {
+    db.insert(objectType, data, callback);
+});
 
 module.exports = {
     /**
@@ -24,5 +31,5 @@ module.exports = {
      *     console.log(response);
      * });
      */
-    insert: db.insert
+    insert: insert
 };
