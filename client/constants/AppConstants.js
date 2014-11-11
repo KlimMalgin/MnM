@@ -8,6 +8,8 @@ var keyMirror = require('react/lib/keyMirror');
 
 module.exports = {
 
+    ApiHost: "http://localhost:7878/api",
+
     FormState : keyMirror({
         EDITABLE: null,
         SUBMITTING: null,
