@@ -13,7 +13,7 @@ var apiHost = require('../../constants/AppConstants').ApiHost;
  * @param config
  * @returns {Function}
  */
-var createTransport = function (config) {
+var createXhrTransport = function (config) {
     return function (opts) {
         /**
          * @type {{promise: Promise, resolve: Function, reject: Function}} Deferred
@@ -50,5 +50,5 @@ var createTransport = function (config) {
     }
 };
 
-module.exports = createTransport;
+module.exports = createXhrTransport;
 
