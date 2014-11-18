@@ -10,10 +10,16 @@ var transactionDb = require('../db/transaction');
 
 
 /**
- * Вернуть все транзакции пользователя
+ * Вернуть все транзакции пользователя,
+ * подходящие под параметры фильтра
  */
-transaction.get('/transaction', function (req, res) {
-    res.send("GET: /transaction");
+transaction.post('/transaction/filter', function (req, res) {
+    transactionDb.select({
+        cost: 1024
+    }, function (err, response) {
+        console.log(err, response);
+    });
+    res.send("POST: /transaction/filter");
 });
 
 /**

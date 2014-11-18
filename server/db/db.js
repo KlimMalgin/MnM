@@ -20,6 +20,10 @@ var insert = curry(3, function (objectType, data, callback) {
     db.insert(objectType, data, callback);
 });
 
+var select = curry(3, function (objectType, params, callback) {
+    db.findMany(objectType, params, callback);
+});
+
 module.exports = {
     /**
      * Добавить запись в БД.
@@ -31,5 +35,19 @@ module.exports = {
      *     console.log(response);
      * });
      */
-    insert: insert
+    insert: insert,
+
+    /**
+     * Получить записи из БД по указанным параметрам.
+     * @param {String} name имя(тип) записи
+     * @param {Object} params фильтрующие параметры
+     * @param {Function} callback Метод обратного вызова. Получит записи,
+     * соответствующие указанным параметрам (error, response)
+     * ===========================================================
+     * app.findMany('Foo', { foo: 'bar' }, function (err, response) {
+     *      console.log(response);
+     * });
+     */
+    select: select
+
 };

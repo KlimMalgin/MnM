@@ -11,5 +11,12 @@ module.exports = {
      * @param {Object} data данные записи
      * @param {Function} callback Метод обратного вызова. Получит параметры (error, response)
      */
-    insert: db.insert('Transaction')
+    insert: db.insert('Transaction'),
+
+    /**
+     * Выполнит select для Transaction
+     * @param {Object} params параметры фильтрации выборки
+     * @param {Function} callback Получит выбранные транзакции
+     */
+    select: db.select('Transaction')
 };
