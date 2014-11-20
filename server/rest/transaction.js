@@ -15,17 +15,17 @@ var responceFormats = require('../response-formats');
  * подходящие под параметры фильтра
  */
 transaction.post('/transaction/filter', function (req, res) {
-    if (req.body) {
-        transactionDb.select(req.body,
+    //if (req.body) {
+        transactionDb.select(req.body || {},
             function (err, response) {
                 res.send(JSON.stringify(responceFormats.success(response)));
             });
-    } else {
+    /*} else {
         res.send(JSON.stringify(responceFormats.error({
             message: "Uncorrect parameters",
             data: req.body
         })));
-    }
+    }*/
 });
 
 /**
