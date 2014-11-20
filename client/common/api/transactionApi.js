@@ -13,10 +13,22 @@ var sendTransactionTransport = xhrTransport({
     }
 });
 
+var filterTransactions = xhrTransport({
+    method: "POST",
+    uri: function () {
+        return "/transaction/filter";
+    }
+});
+
+
 module.exports = {
 
     sendTransaction: function (opts) {
         return sendTransactionTransport(opts);
+    },
+
+    filterTransactions: function (opts) {
+        return filterTransactions(opts);
     }
 
 };
