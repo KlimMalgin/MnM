@@ -8,18 +8,24 @@ var transaction = express.Router();
 
 var transactionDb = require('../db/transaction');
 
+var responceFormats = require('../response-formats');
 
 /**
  * Вернуть все транзакции пользователя,
  * подходящие под параметры фильтра
  */
 transaction.post('/transaction/filter', function (req, res) {
-    transactionDb.select({
-        cost: 1024
-    }, function (err, response) {
-        console.log(err, response);
-    });
-    res.send("POST: /transaction/filter");
+    if (req.body) {
+        transactionDb.select(req.body,
+            function (err, response) {
+                res.send(JSON.stringify(responceFormats.success(response)));
+            });
+    } else {
+        res.send(JSON.stringify(responceFormats.error({
+            message: "Uncorrect parameters",
+            data: req.body
+        })));
+    }
 });
 
 /**
