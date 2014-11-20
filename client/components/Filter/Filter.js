@@ -16,7 +16,7 @@ var Filter = React.createClass({
     handleClickButton: function () {
         transactionApi.filterTransactions({
             body: {
-                cost: 6116
+                objectId: "eESgSA0HzA"
             }
         })
         .done(function () {
