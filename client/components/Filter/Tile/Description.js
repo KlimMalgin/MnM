@@ -10,7 +10,7 @@ var Description = React.createClass({
 
     render: function () {
         return (
-            <div className="description"></div>
+            <div className="description">{this.props.children}</div>
         );
     }
 

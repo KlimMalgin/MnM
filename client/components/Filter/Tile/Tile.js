@@ -12,13 +12,40 @@ var Description = require('./Description');
 
 var Tile = React.createClass({
 
+    getDefaultProps: function () {
+        return {
+            dataItem: {}
+        };
+    },
+
+    getInitialState: function () {
+        return {
+            cost: 0,
+            date: "",
+            description: "",
+            objectId: "",
+            tags: []
+        };
+    },
+
+    /*componentWillReceiveProps: function(nextProps) {
+        debugger;
+        this.setState({
+            cost: nextProps.dataItem.cost,
+            date: nextProps.dataItem.date,
+            description: nextProps.dataItem.description,
+            objectId: nextProps.dataItem.objectId,
+            tags: nextProps.dataItem.tags
+        });
+    },*/
+
     render: function () {
         return (
             <div className="transaction-tile">
-                <Cost></Cost>
-                <Date></Date>
-                <Description></Description>
-                <Tags></Tags>
+                <Cost>{this.props.dataItem.cost}</Cost>
+                <Date>{this.props.dataItem.date}</Date>
+                <Description>{this.props.dataItem.description}</Description>
+                <Tags>{this.props.dataItem.tags}</Tags>
             </div>
         );
     }

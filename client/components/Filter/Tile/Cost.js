@@ -10,7 +10,7 @@ var Cost = React.createClass({
 
     render: function () {
         return (
-            <div className="cost"></div>
+            <div className="cost">{this.props.children}</div>
         );
     }
 

@@ -11,10 +11,14 @@ var Date = React.createClass({
     render: function () {
         return (
             <div className="date-time">
-                <div className="date"></div>
-                <div className="time"></div>
+                {this.props.children}
             </div>
         );
+
+        /*
+         <div className="date"></div>
+         <div className="time"></div>
+        */
     }
 
 });

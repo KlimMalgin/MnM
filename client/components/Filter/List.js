@@ -24,7 +24,7 @@ var List = React.createClass({
 
     getInitialState: function () {
         return {
-            transactionList: Option.from(null)
+            transactionList: Option.from([])
         };
     },
 
@@ -32,10 +32,20 @@ var List = React.createClass({
         TransactionActions.loadTransactions();
     },
 
+    renderListItem: function (item) {
+        return <Tile dataItem={item} />;
+    },
+
+    renderList: function (listValue) {
+        return listValue.map(this.renderListItem);
+    },
+
     render: function () {
         console.log(this.state.transactionList);
         return (
-            <div>pam-pam</div>
+            <div className="transaction-list">
+            {this.state.transactionList.chain(this.renderList)}
+            </div>
         );
     }
 

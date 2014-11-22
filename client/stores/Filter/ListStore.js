@@ -10,6 +10,7 @@ var Option = require('fantasy-options').Option;
 var TransactionActions = require('../../actions/TransactionActions');
 
 var FilterListStore = Reflux.createStore({
+
     init: function () {
         this.transactionList = Option.from([]);
 

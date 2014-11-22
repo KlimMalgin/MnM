@@ -10,7 +10,7 @@ var Tags = React.createClass({
 
     render: function () {
         return (
-            <div className="tags"></div>
+            <div className="tags">[tags]</div>
         );
     }
 
