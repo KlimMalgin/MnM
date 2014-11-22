@@ -29,7 +29,7 @@ var List = React.createClass({
     },
 
     componentDidMount: function () {
-        TransactionActions.loadTransaction();
+        TransactionActions.loadTransactions();
     },
 
     render: function () {

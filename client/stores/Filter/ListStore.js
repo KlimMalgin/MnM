@@ -13,7 +13,7 @@ var FilterListStore = Reflux.createStore({
     init: function () {
         this.transactionList = Option.from([]);
 
-        this.listenTo(TransactionActions.loadTransaction, this.handleLoadTransactions);
+        this.listenTo(TransactionActions.receiveTransactions, this.handleReceiveTransactions);
     },
 
     getDefaultData: function() {
@@ -24,8 +24,7 @@ var FilterListStore = Reflux.createStore({
         this.trigger(this.transactionList = listOption);
     },
 
-    handleLoadTransactions: function (listOption) {
-        debugger;
+    handleReceiveTransactions: function (listOption) {
         this.update(listOption);
     }
 
