@@ -5,6 +5,7 @@
 
 
 var Reflux = require('reflux');
+var Option = require('fantasy-options').Option;
 
 var TransactionApi = require('../common/api/transactionApi');
 
@@ -13,14 +14,25 @@ var sendTransactionDef = {
         TransactionApi
             .sendTransaction(transactionData)
             .done(function () {
-                console.info("ТРАНЗАКЦИЯ ОТПРАВЛЕНА", arguments);
-                debugger;
+                console.info("ТРАНЗАКЦИЯ ОТПРАВЛЕНА ", arguments);
+            });
+    }
+};
+
+var loadTransactionDef = {
+    preEmit: function (filterData) {
+        TransactionApi.filterTransactions({
+            body: filterData || {}
+        })
+            .done(function () {
+                console.log('ПОЛУЧЕН НАБОР ТРАНЗАКЦИЙ ', arguments);
             });
     }
 };
 
 var DropdownActions = {
-    sendTransaction: Reflux.createAction(sendTransactionDef)
+    sendTransaction: Reflux.createAction(sendTransactionDef),
+    loadTransaction: Reflux.createAction(loadTransactionDef)
 
 };
 

@@ -19,7 +19,7 @@
     "eventie": "~1.0.5",
     "events": "~1.0.2",
     "fantasy-lenses": "~0.1.1",
-    "fantasy-options": "0.0.1",
+    "fantasy-options": "git://github.com/Laiff/fantasy-options.git#v0.1.2",
     "fantasy-stores": "~0.1.0",
     "font-awesome": "~4.2.0",
     "get-size": "~1.1.7",
