@@ -28,17 +28,6 @@ var Tile = React.createClass({
         };
     },
 
-    /*componentWillReceiveProps: function(nextProps) {
-        debugger;
-        this.setState({
-            cost: nextProps.dataItem.cost,
-            date: nextProps.dataItem.date,
-            description: nextProps.dataItem.description,
-            objectId: nextProps.dataItem.objectId,
-            tags: nextProps.dataItem.tags
-        });
-    },*/
-
     render: function () {
         return (
             <div className="transaction-tile">

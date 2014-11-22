@@ -5,6 +5,7 @@
 'use strict';
 
 var React = require('react');
+var FilterPanel = require('./Panel/Panel');
 var TransactionList = require('./List');
 
 var Filter = React.createClass({
@@ -13,6 +14,8 @@ var Filter = React.createClass({
         return (
             <div className="filter">
                 Filter block
+                <FilterPanel />
+                <br />
                 <TransactionList />
             </div>
         );
