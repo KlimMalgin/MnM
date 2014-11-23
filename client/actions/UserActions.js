@@ -20,8 +20,8 @@ var loginUserDef = {
     preEmit: function (username, password) {
         UserApi.loginUser({
             body: {
-                username: username/*,
-                password: password*/
+                username: username,
+                password: password
             }
         }).done(UserActions.loginUserSuccess, UserActions.loginUserError);
     }
@@ -29,10 +29,9 @@ var loginUserDef = {
 
 var loginUserSuccessDef = {
     preEmit: function (data) {
-        debugger;
-        if (data.results && data.results.length === 1) {
-            store.set(userConst.USER, data.results[0]);
-            return Option.from(data.results[0]);
+        if (data && data.objectId) {
+            store.set(userConst.USER, data);
+            return Option.from(data);
         } else {
             return Option.None;
         }

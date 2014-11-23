@@ -45,7 +45,7 @@ var UserForm = React.createClass({
     },
 
     renderUserName: function (user) {
-        return <span className="login-username">{user.name}</span>;
+        return <span className="login-username">Hi, {user.username}!</span>;
     },
 
     renderForm: function () {

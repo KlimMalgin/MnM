@@ -10,7 +10,7 @@ var UserActions = require('../../actions/UserActions');
 
 var UserStore = Reflux.createStore({
     init: function () {
-        this.user = Option.from({});
+        this.user = Option.from(null);
 
         this.listenTo(UserActions.checkUserLogined, this.handleCheckUserLogined);
         this.listenTo(UserActions.loginUserSuccess, this.handleLoginUserSuccess);
