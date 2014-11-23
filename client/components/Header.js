@@ -6,12 +6,16 @@
 
 var React = require('react');
 
+var UserForm = require('./User/UserForm');
+
 var Header = React.createClass({
 
     render: function () {
         return (
             <div className="header">
-                <div className="auth">You Anonymous.</div>
+                <div className="auth">
+                    <UserForm />
+                </div>
             </div>
         );
     }

@@ -14,5 +14,9 @@ module.exports = {
         EDITABLE: null,
         SUBMITTING: null,
         SUBMITTED: null
-    })
+    }),
+
+    lStorage : {
+        USER: 'mnm-user'
+    }
 };
