@@ -2,6 +2,7 @@
 
 @import "form";
 @import "dashboard";
+@import "header";
 
 .application {
   @include size(100%, auto);

@@ -7,6 +7,8 @@
 var React = require('react/addons'),
     cs = React.addons.classSet;
 
+var Header = require('./Header');
+
 var Application = React.createClass({
 
     render: function () {
@@ -16,6 +18,7 @@ var Application = React.createClass({
 
         return (
             <div className={cs(classes)}>
+                <Header />
                 <div className="area">
                     {this.props.activeRouteHandler()}
                 </div>
