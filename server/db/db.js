@@ -24,6 +24,13 @@ var select = curry(3, function (objectType, params, callback) {
     db.findMany(objectType, params, callback);
 });
 
+var getUser = curry(2, function (params, callback) {
+    //db.findMany(objectType, params, callback);
+    db.getUser(params.username, params.password, callback);
+});
+
+// getUser (userName, password, callback)
+
 module.exports = {
     /**
      * Добавить запись в БД.
@@ -48,6 +55,9 @@ module.exports = {
      *      console.log(response);
      * });
      */
-    select: select
+    select: select,
+
+
+    getUser: getUser
 
 };
