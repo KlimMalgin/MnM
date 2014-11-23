@@ -13,18 +13,28 @@ var UserStore = Reflux.createStore({
         this.user = Option.from({});
 
         this.listenTo(UserActions.checkUserLogined, this.handleCheckUserLogined);
+        this.listenTo(UserActions.loginUserSuccess, this.handleLoginUserSuccess);
+        this.listenTo(UserActions.loginUserError, this.handleLoginUserError);
     },
 
     getDefaultData: function() {
         return this.user;
     },
 
-    update : function(user) {
-        this.trigger(this.user = user);
+    update : function(userOption) {
+        this.trigger(this.user = userOption);
     },
 
-    handleCheckUserLogined: function (user) {
-        this.update(user);
+    handleCheckUserLogined: function (userOption) {
+        this.update(userOption);
+    },
+
+    handleLoginUserSuccess: function (userOption) {
+        this.update(userOption);
+    },
+
+    handleLoginUserError: function (userOption) {
+        this.update(userOption);
     }
 
 });

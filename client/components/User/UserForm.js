@@ -5,13 +5,15 @@
 'use strict';
 
 var React = require('react');
+var LinkedStateMixin = React.addons.LinkedStateMixin;
 var Option = require('fantasy-options').Option;
 
 var Reflux = require('reflux'),
     ListenerMixin = Reflux.ListenerMixin;
 
 var Bootstrap = require('react-bootstrap'),
-    Input = Bootstrap.Input;
+    Input = Bootstrap.Input,
+    Button = Bootstrap.Button;
 
 var UserStore = require('../../stores/User/Store');
 
@@ -21,17 +23,25 @@ var UserForm = React.createClass({
 
     mixins: [
         ListenerMixin,
+        LinkedStateMixin,
         Reflux.connect(UserStore, 'user')
     ],
 
     getInitialState: function () {
         return {
-            user: Option.None
+            user: Option.None,
+            // ==
+            username: '',
+            password: ''
         };
     },
 
     componentDidMount: function () {
         UserActions.checkUserLogined();
+    },
+
+    handleClickLoginButton: function () {
+        UserActions.loginUser(this.state.username, this.state.password);
     },
 
     renderUserName: function (user) {
@@ -42,8 +52,9 @@ var UserForm = React.createClass({
         return (
             <div className="user-form">
                 You Anonymous.
-                <Input type="text" placeholder="username" />
-                <Input type="password" placeholder="password" />
+                <Input type="text" placeholder="username" valueLink={this.linkState('username')} />
+                <Input type="password" placeholder="password" valueLink={this.linkState('password')} />
+                <Button type="submit" value="Login" onClick={this.handleClickLoginButton} />
             </div>
         );
     },
