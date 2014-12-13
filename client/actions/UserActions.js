@@ -53,8 +53,7 @@ var loginUserErrorDef = {
 };
 
 var logoutUserSuccessDef = {
-    preEmit: function (data) {
-        debugger;
+    preEmit: function () {
         store.remove(userConst.USER);
         UserActions.checkUserLogined();
     }

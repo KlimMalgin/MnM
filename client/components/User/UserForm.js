@@ -36,10 +36,6 @@ var UserForm = React.createClass({
         };
     },
 
-    /*componentDidMount: function () {
-        UserActions.checkUserLogined();
-    },*/
-
     handleClickLoginButton: function () {
         UserActions.loginUser(this.state.username, this.state.password);
     },
