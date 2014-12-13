@@ -36,16 +36,25 @@ var UserForm = React.createClass({
         };
     },
 
-    componentDidMount: function () {
+    /*componentDidMount: function () {
         UserActions.checkUserLogined();
-    },
+    },*/
 
     handleClickLoginButton: function () {
         UserActions.loginUser(this.state.username, this.state.password);
     },
 
+    handleClickLogoutButton: function () {
+        UserActions.logoutUser(this.state.user);
+    },
+
     renderUserName: function (user) {
-        return <span className="login-username">Hi, {user.username}!</span>;
+        return (
+            <div className="user-info">
+                <span className="login-username">Hi, {user.username}!</span>
+                <Button onClick={this.handleClickLogoutButton} >Logout</Button>
+            </div>
+        );
     },
 
     renderForm: function () {
@@ -54,7 +63,7 @@ var UserForm = React.createClass({
                 You Anonymous.
                 <Input type="text" placeholder="username" valueLink={this.linkState('username')} />
                 <Input type="password" placeholder="password" valueLink={this.linkState('password')} />
-                <Button type="submit" value="Login" onClick={this.handleClickLoginButton} />
+                <Button type="submit" onClick={this.handleClickLoginButton} >Login</Button>
             </div>
         );
     },

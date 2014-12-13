@@ -27,6 +27,14 @@ var loginUserDef = {
     }
 };
 
+var logoutUserDef = {
+    preEmit: function (user) {
+        UserApi.logoutUser({
+            body: user
+        }).done(UserActions.logoutUserSuccess, UserActions.logoutUserError);
+    }
+};
+
 var loginUserSuccessDef = {
     preEmit: function (data) {
         if (data && data.objectId) {
@@ -39,6 +47,20 @@ var loginUserSuccessDef = {
 };
 
 var loginUserErrorDef = {
+    preEmit: function () {
+        return Option.None;
+    }
+};
+
+var logoutUserSuccessDef = {
+    preEmit: function (data) {
+        debugger;
+        store.remove(userConst.USER);
+        UserActions.checkUserLogined();
+    }
+};
+
+var logoutUserErrorDef = {
     preEmit: function () {
         return Option.None;
     }
@@ -58,10 +80,21 @@ var UserActions = {
     loginUser: Reflux.createAction(loginUserDef),
 
     /**
+     * Запрос на остановку пользовательской сессии
+     */
+    logoutUser: Reflux.createAction(logoutUserDef),
+
+    /**
      * Ответы на запрос аутентификации
      */
     loginUserSuccess: Reflux.createAction(loginUserSuccessDef),
-    loginUserError: Reflux.createAction(loginUserErrorDef)
+    loginUserError: Reflux.createAction(loginUserErrorDef),
+
+    /**
+     * Описание результата остановки пользовательской сессии
+     */
+    logoutUserSuccess: Reflux.createAction(logoutUserSuccessDef),
+    logoutUserError: Reflux.createAction(logoutUserErrorDef)
 
 };
 

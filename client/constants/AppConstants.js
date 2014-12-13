@@ -18,5 +18,18 @@ module.exports = {
 
     lStorage : {
         USER: 'mnm-user'
+    },
+
+    rest: {
+        user: {
+            login: {
+                url: "/user/login",
+                type: "POST"
+            },
+            logout: {
+                url: "/user/logout",
+                type: "POST"
+            }
+        }
     }
 };
