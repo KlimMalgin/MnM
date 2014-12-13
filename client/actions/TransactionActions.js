@@ -23,6 +23,7 @@ var sendTransactionDef = {
 
 var loadTransactionDef = {
     preEmit: function (filterData) {
+        debugger;
         TransactionApi.filterTransactions({
             body: filterData || {}
         })

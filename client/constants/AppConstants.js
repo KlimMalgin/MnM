@@ -30,6 +30,15 @@ module.exports = {
                 url: "/user/logout",
                 type: "POST"
             }
+        },
+        transaction: {
+            url: "/transaction",
+            type: "POST",
+
+            filter: {
+                url: "/transaction/filter",
+                type: "POST"
+            }
         }
     }
 };

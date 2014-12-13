@@ -3,20 +3,20 @@
  */
 'use strict';
 
-
 var xhrTransport = require('../transports/xhr');
+var rest = require('../../constants/AppConstants').rest;
 
 var sendTransactionTransport = xhrTransport({
-    method: "POST",
+    method: rest.transaction.type,
     uri: function () {
-        return "/transaction";
+        return rest.transaction.url;
     }
 });
 
 var filterTransactions = xhrTransport({
-    method: "POST",
+    method: rest.transaction.filter.type,
     uri: function () {
-        return "/transaction/filter";
+        return rest.transaction.filter.url;
     }
 });
 
