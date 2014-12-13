@@ -27,5 +27,12 @@ user.post('/user/login', function (req, res) {
         });
 });
 
+user.post('/user/logout', function (req, res) {
+    // TODO: Заглушка. Позволяет при любых обстоятельствах закрыть сессию на клиенте. При этом состояние пользователя на сервере не проверяется
+    res.send(JSON.stringify(responceFormats.success({
+        logout: true
+    })));
+});
+
 
 module.exports = user;
