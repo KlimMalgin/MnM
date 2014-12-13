@@ -13,7 +13,6 @@ var TransactionActions = require('../../actions/TransactionActions');
 var UserStore = require('../User/Store');
 
 var _requestTransactionMapper = function (user) {
-    debugger;
     return Option.from({
         userId: user.objectId
     });
@@ -49,8 +48,7 @@ var FilterListStore = Reflux.createStore({
     },
 
     requestTransactions: function () {
-        // TODO: Почему уходит два запроса при старте приложения?? Первый пустой. Второй с id пользователя
-        this.user.chain(_requestTransactionMapper).chain(TransactionActions.loadTransactions);
+        this.user.chain(_requestTransactionMapper).fold(TransactionActions.loadTransactions, TransactionActions.clearTransactions);
     }
 
 });

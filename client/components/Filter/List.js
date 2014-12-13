@@ -28,10 +28,6 @@ var List = React.createClass({
         };
     },
 
-    componentDidMount: function () {
-        TransactionActions.loadTransactions();
-    },
-
     renderListItem: function (item) {
         return <Tile dataItem={item} />;
     },

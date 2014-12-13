@@ -23,7 +23,6 @@ var sendTransactionDef = {
 
 var loadTransactionDef = {
     preEmit: function (filterData) {
-        debugger;
         TransactionApi.filterTransactions({
             body: filterData || {}
         })
@@ -37,11 +36,21 @@ var receiveTransactionDef = {
     }
 };
 
+var clearTransactionDef = {
+    preEmit: function () {
+        TransactionActions.receiveTransactions({
+            results: []
+        });
+    }
+};
+
 var TransactionActions = {
     sendTransaction: Reflux.createAction(sendTransactionDef),
     loadTransactions: Reflux.createAction(loadTransactionDef),
 
-    receiveTransactions: Reflux.createAction(receiveTransactionDef)
+    receiveTransactions: Reflux.createAction(receiveTransactionDef),
+
+    clearTransactions: Reflux.createAction(clearTransactionDef)
 };
 
 module.exports = TransactionActions;
