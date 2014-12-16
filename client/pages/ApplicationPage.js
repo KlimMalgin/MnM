@@ -7,7 +7,7 @@
 var React = require('react/addons'),
     cs = React.addons.classSet;
 
-var Header = require('./Header');
+var Header = require('./../components/Header');
 
 var Application = React.createClass({
 
