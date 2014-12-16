@@ -12,16 +12,24 @@ var React = require('react'),
     NotFoundRoute = Router.NotFoundRoute;
 
 var Application = require('./Application'),
-    Dashboard = require('./Dashboard/Dashboard');
+    Dashboard = require('./Dashboard/Dashboard'),
+    // == Pages
+    Pages = require('../pages/Pages'),
+    LoginPage = require('../pages/LoginPage');
 
 var Router = React.createClass({
 
     render: function () {
         return (
             <Routes location="history" preserveScrollPosition>
-                <Route handler={Application}>
+                <Route name="pages" handler={Pages}>
+                    <Route name="login" handler={LoginPage} path="/login" />
+                </Route>
+                <Route name="application" handler={Application}>
+                    <Route name="dashboard" handler={Dashboard} path="/dashboard" />
                     <DefaultRoute handler={Dashboard} />
                 </Route>
+                <DefaultRoute handler={Dashboard} />
             </Routes>
         );
     }
