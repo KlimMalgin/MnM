@@ -1,0 +1,15 @@
+
+
+.login-page {
+  @include relative;
+  @include size(100%, 100%);
+}
+
+.auth-panel {
+  @include absolute(0, 0, 0, 0);
+  @include size(300px, 230px);
+  box-shadow: 0 0 5px #000;
+  border-radius: 2px;
+  overflow: auto;
+  margin: auto;
+}

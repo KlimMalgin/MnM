@@ -13,8 +13,8 @@ var LoginPage = React.createClass({
     render: function () {
         return (
             <div className="login-page">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div className="panel panel-default auth-panel">
+                    <div className="panel-body">
                     Панель для размещения формы входа
                     </div>
                 </div>

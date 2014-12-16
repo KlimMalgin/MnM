@@ -7,9 +7,14 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "../../node_modules/font-awesome/scss/font-awesome";
 
-@import "components/application";
+@import "pages/pages";
+
+html {
+  height: 100%;
+}
 
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
 }

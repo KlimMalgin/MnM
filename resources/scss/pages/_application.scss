@@ -1,8 +1,8 @@
 
 
-@import "form";
-@import "dashboard";
-@import "header";
+@import "../components/form";
+@import "../components/dashboard";
+@import "../components/header";
 
 .application {
   @include size(100%, auto);
