@@ -1,0 +1,99 @@
+
+
+.input-extended {
+  @include relative;
+}
+
+.input-extended > .input-message {
+  @include absolute(auto, auto, 42px, auto);
+  @include size(100%, auto);
+  border-radius: 5px 5px;
+  min-height: 29px;
+  max-height: 45px;
+  font-size: 14px;
+  color: #ffffff;
+  z-index: 8;
+
+  .text {
+    @include size(100%, auto);
+    padding: 4px 10px 4px 13px;
+    max-height: 45px;
+    overflow: hidden;
+  }
+}
+
+.input-extended .message-bg {
+  @include absolute(auto, auto, 33px, auto);
+  @include transition(visibility 0s ease-in-out 0.1s, opacity 0.1s ease-in-out);
+  @include size(100%, 13px);
+  visibility: hidden;
+  opacity: 0;
+  z-index: 7;
+
+  &.visible {
+    visibility:visible;
+    opacity:1;
+    @include transition-delay(0s);
+  }
+
+  &.info {
+    background-color: $input-message-info-bg;
+  }
+  &.error {
+    background-color: $input-message-error-bg;
+  }
+}
+
+.input-extended .form-control {
+  @include relative;
+  z-index: 9;
+  color: $text-color;
+}
+
+.input-extended .input-group-addon {
+  @include relative;
+  font-size: 18px;
+  z-index: 9;
+
+  .fa-spin {
+    color: $brand-info;
+    font-size: 24px;
+    line-height: 18px;
+  }
+}
+
+.input-extended > .input-message {
+  visibility:hidden;
+  opacity:0;
+  @include transition(visibility 0s ease-in-out 0.1s, opacity 0.1s ease-in-out);
+}
+
+.input-extended > .input-message.visible {
+  visibility:visible;
+  opacity:1;
+  @include transition-delay(0s);
+}
+
+.input-message {
+
+  &.info {
+    background-color: $input-message-info-bg;
+  }
+  &.error {
+    background-color: $input-message-error-bg;
+  }
+}
+
+.input-extended > .show-pass {
+  @include absolute(30px, 6px);
+  padding: 6px 8px;
+  font-size: 27px;
+  color: #AFAFAF;
+  cursor: pointer;
+  z-index: 10;
+
+  &:hover,
+  &.visible {
+    color: $brand-primary;
+  }
+}

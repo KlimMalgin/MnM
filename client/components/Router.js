@@ -30,7 +30,6 @@ var Router = React.createClass({
                         <DefaultRoute handler={Dashboard} />
                     </Route>
                     <DefaultRoute handler={LoginPage} />
-                    <NotFoundRoute handler={LoginPage} />
                 </Route>
             </Routes>
         );
