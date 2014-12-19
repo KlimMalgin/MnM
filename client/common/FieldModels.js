@@ -3,7 +3,8 @@
  */
 'use strict';
 
-
+var Validators = require('./Validators'),
+    ap = Validators.ap;
 
 var FieldModels = {
     Cost : {
@@ -29,6 +30,38 @@ var FieldModels = {
         type: 'text',
         label: 'Дата',
         placeholder: 'Дата транзакции'
+    },
+    Email : {
+        name: 'email',
+        type: 'text',
+        label: '',
+        placeholder: 'email',
+        message: {
+            text: 'Ваш e-mail не будет отображаться и послужит только для связи с Вами',
+            behavior: 'focus',
+            type: 'info'
+        },
+        validators: {
+            sync : ap([
+                Validators.required
+            ])
+        }
+    },
+    Password : {
+        name: 'password',
+        type: 'password',
+        label: '',
+        placeholder: 'password',
+        message: {
+            text: 'Не доверяйте свой пароль третьим лицам!',
+            type: 'info',
+            behavior: 'focus'
+        },
+        validators : {
+            sync: ap([
+                Validators.required
+            ])
+        }
     }
 };
 

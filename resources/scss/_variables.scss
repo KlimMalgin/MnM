@@ -1,0 +1,17 @@
+
+
+// Brand basic color overrides
+$brand-primary:         #7cade0;
+$brand-success:         #5cb85c;
+$brand-info:            #5bc0de;
+$brand-warning:         #f0ad4e;
+$brand-danger:          #f33403;
+
+//Basic colors
+$default-color:         #5c626e;
+$default-bg:            #edede8;
+
+
+// == InputMessages
+$input-message-info-bg:         $input-border-focus;
+$input-message-error-bg:        $brand-danger;

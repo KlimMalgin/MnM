@@ -85,7 +85,7 @@
 }
 
 .input-extended > .show-pass {
-  @include absolute(30px, 6px);
+  @include absolute(0, 6px);  // 30px
   padding: 6px 8px;
   font-size: 27px;
   color: #AFAFAF;

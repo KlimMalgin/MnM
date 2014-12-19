@@ -12,6 +12,10 @@ var FormModels = {
         tags: FieldModels.Tags,
         description: FieldModels.Description,
         date: FieldModels.Date
+    },
+    Login: {
+        email: FieldModels.Email,
+        password: FieldModels.Password
     }
 };
 
