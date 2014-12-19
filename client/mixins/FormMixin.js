@@ -1,21 +1,35 @@
 /**
- * Created by KlimMalgin on 27.10.2014.
+ * Created by laiff on 12.09.14.
  */
 'use strict';
 
 var React = require('react'),
+    invariant = require('react/lib/invariant'),
     mapObject = require('react/lib/mapObject');
 
 var pt = React.PropTypes;
 
 var FormState = require('../constants/AppConstants').FormState;
 
+var ValidationActions = require('../actions/ValidationActions');
 
+/**
+ *
+ * @mixin FormMixin
+ *
+ * @extends ReactCompositeComponentInterface
+ *
+ * @type {{
+ *      formModel: Function,
+ *      collectFormData: Function
+ * }}
+ */
 var FormMixin = {
 
     propTypes: {
-        formModel: pt.any.isRequired
+        formModel: pt.any.isRequired // TODO FormModel shape @laiff
     },
+
 
     getInitialState: function () {
         return {
@@ -23,6 +37,13 @@ var FormMixin = {
         };
     },
 
+    componentDidMount: function () {
+    },
+
+    /**
+     *
+     * @returns {Object}
+     */
     formModel : function () {
         return this.props.formModel;
     },
@@ -49,12 +70,18 @@ var FormMixin = {
         return this.formState() === FormState.SUBMITTED;
     },
 
-    collectFormData: function() {
-        return mapObject(this.formModel(), function(field) {
-            return this.state.validation[field.name].value;
-        });
-    }
+    collectFieldData: function(field) {
+        var validation = this.state.validation[field.name];
+        return !!validation ? validation.value : null;
+    },
 
+    collectFormData: function() {
+        return mapObject(this.formModel(), this.collectFieldData);
+    },
+
+    clearForm: function() {
+        ValidationActions.clear();
+    }
 };
 
 module.exports = FormMixin;
