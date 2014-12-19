@@ -38,12 +38,13 @@ var FieldModels = {
         placeholder: 'email',
         message: {
             text: 'Ваш e-mail не будет отображаться и послужит только для связи с Вами',
-            behavior: 'focus',
+            behavior: 'none',
             type: 'info'
         },
         validators: {
             sync : ap([
-                Validators.required
+                Validators.required,
+                Validators.emailValid
             ])
         }
     },
@@ -54,8 +55,11 @@ var FieldModels = {
         placeholder: 'password',
         message: {
             text: 'Не доверяйте свой пароль третьим лицам!',
-            type: 'info',
-            behavior: 'focus'
+            behavior: 'none',
+            type: 'info'
+        },
+        plugins: {
+            togglePass: false
         },
         validators : {
             sync: ap([

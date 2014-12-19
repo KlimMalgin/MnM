@@ -94,14 +94,18 @@ var InputExtended = React.createClass({
     },
 
     renderPassToggle: function () {
+        if (this.props.field.plugins &&
+            !this.props.field.plugins.togglePass) return null;
+
         var classes = {
             showPass: true,
             visible: this.state.type !== "password"
         };
 
-        if (this.props.field.type === 'password') {
+        if (this.props.field.type === 'password')
             return (<Icon type="eye" onClick={this.handleTogglePassword} className={hcx(classes)} />);
-        }
+        else
+            return null;
     },
 
     renderMessageText: function (text) {
