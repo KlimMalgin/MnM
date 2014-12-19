@@ -16,6 +16,16 @@ module.exports = {
         SUBMITTED: null
     }),
 
+    /**
+     * Состояние валидации
+     */
+    ValidationStatus : keyMirror({
+        INITIAL: null,
+        VALIDATING: null,
+        VALID: null,
+        INVALID: null
+    }),
+
     lStorage : {
         USER: 'mnm-user'
     },
