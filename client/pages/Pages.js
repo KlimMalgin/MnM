@@ -5,7 +5,13 @@
 
 var React = require('react');
 
+var RouterHandler = require('../mixins/RouterHandler');
+
 var Pages = React.createClass({
+
+    mixins: [
+        RouterHandler
+    ],
 
     render: function () {
         return this.props.activeRouteHandler();
