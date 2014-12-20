@@ -17,11 +17,11 @@ var checkUserLoginedDef = {
 };
 
 var loginUserDef = {
-    preEmit: function (username, password) {
+    preEmit: function (data) {
         UserApi.loginUser({
             body: {
-                username: username,
-                password: password
+                username: data.email,
+                password: data.password
             }
         }).done(UserActions.loginUserSuccess, UserActions.loginUserError);
     }

@@ -37,7 +37,10 @@ var UserForm = React.createClass({
     },
 
     handleClickLoginButton: function () {
-        UserActions.loginUser(this.state.username, this.state.password);
+        UserActions.loginUser({
+            email: this.state.username,
+            password: this.state.password
+        });
     },
 
     handleClickLogoutButton: function () {
