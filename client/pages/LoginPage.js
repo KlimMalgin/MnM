@@ -27,7 +27,7 @@ var LoginPage = React.createClass({
 
     mixins: [
         FormMixin,
-        //ListenerMixin,
+        ListenerMixin,
         AuthStateMixin,
         Reflux.connect(ValidationStore, 'validation'),
         Reflux.listenTo(ValidationStore, 'validationChange')
@@ -50,6 +50,7 @@ var LoginPage = React.createClass({
     },
 
     onChangeAuth: function () {
+        // TODO: Почему is работает некорректно при сравнении с Option.None?
         //this.isAuth().is(Option.None).chain(RouterActions.dashboard);
         this.isAuth().chain(RouterActions.dashboard);
     },

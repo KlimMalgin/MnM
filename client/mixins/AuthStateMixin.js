@@ -3,26 +3,20 @@
  */
 'use strict';
 
-var Reflux = require('reflux'),
-    ListenerMixin = Reflux.ListenerMixin;
+var Reflux = require('reflux');
 
 var UserStore = require('../stores/User/Store');
 
 var AuthStateMixin = {
 
     mixins: [
-        ListenerMixin,
         Reflux.connect(UserStore, 'user'),
         Reflux.listenTo(UserStore, 'onChangeAuth')
     ],
 
     isAuth: function () {
         return this.state.user
-    }/*,
-
-    onChangeAuth: function () {
-
-    }*/
+    }
 
 };
 
