@@ -4,6 +4,9 @@
  */
 
 var React = require('react');
+var Reflux = require('reflux'),
+    ListenerMixin = Reflux.ListenerMixin;
+
 var Option = require('fantasy-options').Option;
 
 var FormModels = require('../common/FormModels');
@@ -13,10 +16,16 @@ var InputExtended = require('../plugins/InputExtended');
 var Bootstrap = require('react-bootstrap'),
     Button = Bootstrap.Button;
 
+var UserActions = require('../actions/UserActions');
+
+var ValidationStore = require('../stores/ValidationStore');
+
 var LoginPage = React.createClass({
 
     mixins: [
-        FormMixin
+        FormMixin,
+        ListenerMixin,
+        Reflux.connect(ValidationStore, 'validation')
     ],
 
     getDefaultProps: function () {
@@ -25,15 +34,23 @@ var LoginPage = React.createClass({
         };
     },
 
+    handleSubmitForm: function (e) {
+        e.preventDefault();
+        var data = this.collectFormData();
+        console.log("state: %o | object: %o", this.formState(), data);
+    },
+
     render: function () {
         return (
             <div className="login-page">
                 <div className="panel panel-default auth-panel">
                     <div className="panel-body">
                     <h4>Введите данные для входа: </h4>
-                        <InputExtended field={this.formModel().email} />
-                        <InputExtended field={this.formModel().password} />
-                        <Button>Вход</Button>
+                        <form className="page-login-form" onSubmit={this.handleSubmitForm}>
+                            <InputExtended field={this.formModel().email} />
+                            <InputExtended field={this.formModel().password} />
+                            <Button type="submit">Вход</Button>
+                        </form>
                     </div>
                 </div>
             </div>
