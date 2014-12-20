@@ -7,9 +7,13 @@ var React = require('react'),
     invariant = require('react/lib/invariant'),
     mapObject = require('react/lib/mapObject');
 
+var reduceObject = require('../utils/reduceObject').objectReducer;
+
 var pt = React.PropTypes;
 
-var FormState = require('../constants/AppConstants').FormState;
+var constants = require('../constants/AppConstants'),
+    FormState = constants.FormState,
+    ValidationStatus = constants.ValidationStatus;
 
 var ValidationActions = require('../actions/ValidationActions');
 
@@ -68,6 +72,23 @@ var FormMixin = {
 
     isFormSubmitted: function () {
         return this.formState() === FormState.SUBMITTED;
+    },
+
+    checkValidFormData: function () {
+        var that = this;
+        return ValidationStatus.INVALID in reduceObject(this.formModel(), function (field) {
+            var result = {},
+                valid = ValidationStatus.VALID,
+                invalid = ValidationStatus.INVALID;
+            if (valid === that.collectFieldStatus(field)) result[valid] = valid;
+            else result[invalid] = invalid;
+            return result;
+        }) ? ValidationStatus.INVALID : ValidationStatus.VALID;
+    },
+
+    collectFieldStatus: function (field) {
+        var validation = this.state.validation[field.name];
+        return !!validation ? validation.status : ValidationStatus.INVALID;
     },
 
     collectFieldData: function(field) {
