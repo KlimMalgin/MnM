@@ -9,14 +9,16 @@ var Reflux = require('reflux'),
 
 var Option = require('fantasy-options').Option;
 
-var FormModels = require('../common/FormModels');
-var FormMixin = require('../mixins/FormMixin');
+var FormModels = require('../common/FormModels'),
+    FormMixin = require('../mixins/FormMixin'),
+    AuthStateMixin  = require('../mixins/AuthStateMixin');
 
 var InputExtended = require('../plugins/InputExtended');
 var Bootstrap = require('react-bootstrap'),
     Button = Bootstrap.Button;
 
-var UserActions = require('../actions/UserActions');
+var UserActions = require('../actions/UserActions'),
+    RouterActions = require('../actions/RouterActions');
 
 var ValidationStore = require('../stores/ValidationStore'),
     ValidationStatus = require('../constants/AppConstants').ValidationStatus;
@@ -25,7 +27,8 @@ var LoginPage = React.createClass({
 
     mixins: [
         FormMixin,
-        ListenerMixin,
+        //ListenerMixin,
+        AuthStateMixin,
         Reflux.connect(ValidationStore, 'validation'),
         Reflux.listenTo(ValidationStore, 'validationChange')
     ],
@@ -40,6 +43,15 @@ var LoginPage = React.createClass({
         return {
             formModel: FormModels.Login
         };
+    },
+
+    componentDidMount: function () {
+        this.onChangeAuth();
+    },
+
+    onChangeAuth: function () {
+        //this.isAuth().is(Option.None).chain(RouterActions.dashboard);
+        this.isAuth().chain(RouterActions.dashboard);
     },
 
     handleSubmitForm: function (e) {

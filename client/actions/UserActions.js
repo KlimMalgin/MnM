@@ -10,8 +10,6 @@ var store = require('store');
 
 var UserApi = require('../common/api/userApi');
 
-var RouterActions = require('../actions/RouterActions');
-
 var checkUserLoginedDef = {
     preEmit: function () {
         return Option.from(store.get(userConst.USER));
@@ -41,7 +39,6 @@ var loginUserSuccessDef = {
     preEmit: function (data) {
         if (data && data.objectId) {
             store.set(userConst.USER, data);
-            RouterActions.dashboard();
             return Option.from(data);
         } else {
             return Option.None;
@@ -59,7 +56,6 @@ var logoutUserSuccessDef = {
     preEmit: function () {
         store.remove(userConst.USER);
         UserActions.checkUserLogined();
-        RouterActions.login();
     }
 };
 

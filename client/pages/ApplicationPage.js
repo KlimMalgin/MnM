@@ -7,9 +7,31 @@
 var React = require('react/addons'),
     cs = React.addons.classSet;
 
+var Option = require('fantasy-options').Option;
+
+var combinators = require('fantasy-combinators'),
+    identity = combinators.identity;
+
 var Header = require('./../components/Header');
 
+var RouterActions = require('../actions/RouterActions');
+
+var AuthStateMixin = require('../mixins/AuthStateMixin');
+
 var Application = React.createClass({
+
+    mixins: [
+        AuthStateMixin
+    ],
+
+    componentDidMount: function () {
+        this.onChangeAuth();
+    },
+
+    onChangeAuth: function () {
+        //this.isAuth().is(Option.None).chain(RouterActions.login);
+        this.isAuth().fold(identity, RouterActions.login);
+    },
 
     render: function () {
         var classes = {

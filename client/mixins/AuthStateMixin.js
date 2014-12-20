@@ -12,12 +12,17 @@ var AuthStateMixin = {
 
     mixins: [
         ListenerMixin,
-        Reflux.connect(UserStore, 'user')
+        Reflux.connect(UserStore, 'user'),
+        Reflux.listenTo(UserStore, 'onChangeAuth')
     ],
 
     isAuth: function () {
         return this.state.user
-    }
+    }/*,
+
+    onChangeAuth: function () {
+
+    }*/
 
 };
 
