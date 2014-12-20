@@ -17,10 +17,12 @@ var Header = require('./../components/Header');
 var RouterActions = require('../actions/RouterActions');
 
 var AuthStateMixin = require('../mixins/AuthStateMixin');
+var ListenerMixin = require('reflux').ListenerMixin;
 
 var Application = React.createClass({
 
     mixins: [
+        ListenerMixin,
         AuthStateMixin
     ],
 
