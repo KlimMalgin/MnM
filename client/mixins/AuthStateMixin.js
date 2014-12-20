@@ -21,4 +21,4 @@ var AuthStateMixin = {
 
 };
 
-module.exports = {};
+module.exports = AuthStateMixin;
