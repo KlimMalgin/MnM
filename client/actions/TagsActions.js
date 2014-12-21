@@ -14,7 +14,7 @@ var loadTagsDef = {
         if (phrase) {
             TagsApi.loadTags({
                 body: {
-                    name: phrase || ""/*,
+                    /*name: phrase || ""/*,
                      count: count || 50*/
                 }
             }).done(TagsActions.receiveTags);

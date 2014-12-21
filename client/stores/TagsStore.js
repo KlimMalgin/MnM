@@ -6,13 +6,16 @@
 var Reflux = require('reflux');
 var Option = require('fantasy-options').Option;
 
-var TagsActions = require('../actions/TagsActions');
+var TagsActions = require('../actions/TagsActions'),
+    DropdownActions = require('../actions/DropdownActions');
 
 var TagsStore = Reflux.createStore({
     init: function () {
         this.tags = Option.None;
 
         this.listenTo(TagsActions.receiveTags, this.handleChangeTags);
+        this.listenTo(DropdownActions.changePhrase, this.handleChangeDropdownField);
+
     },
 
     getDefaultData: function() {
@@ -25,6 +28,10 @@ var TagsStore = Reflux.createStore({
 
     handleChangeTags: function (tags) {
         this.update(tags);
+    },
+
+    handleChangeDropdownField: function (phrase) {
+        TagsActions.loadTags(phrase);
     }
 
 });
