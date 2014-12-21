@@ -7,9 +7,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 
-var formApi = require('./form');
+//var formApi = require('./form');
 var transactionApi = require('./rest/transaction');
 var userApi = require('./rest/user');
+var tagsApi = require('./rest/tags');
 
 var app = express();
 
@@ -21,6 +22,7 @@ var sendFile = function(req, res){
 
 app.use(bodyParser.json());
 
+app.use('/api/', tagsApi);
 app.use('/api/', userApi);
 app.use('/api/', transactionApi);
 
