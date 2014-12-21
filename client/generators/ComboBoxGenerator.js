@@ -7,6 +7,11 @@ var Dropdown = require('../plugins/DropdownTags/DropdownTags');
 
 var curry = require('core.lambda').curry;
 
+/**
+ * TODO: Подключить сторы со всеми вариантами наборов данных для генерируемых ComboBox'ов
+ *
+ */
+
 var _dropdownCreator = function (store, fieldModel) {
     return function () {
         return Dropdown({
@@ -23,8 +28,8 @@ var ComboBoxGenerator = function (ComboBoxType) {
          * @param field модель-описание поля
          * @param dataStore хранилище с набором элементов для списка
          */
-        CategoriesComboBox: curry(2, _dropdownCreator),
-        CustomComboBox: curry(2, _dropdownCreator)
+        CategoriesComboBox: curry(2, _dropdownCreator(/*Store*/)),
+        CustomComboBox: curry(2, _dropdownCreator(/*Store*/))
     };
 
     return types[ComboBoxType];

@@ -27,6 +27,7 @@ var TagsStore = Reflux.createStore({
     },
 
     handleChangeTags: function (tags) {
+        debugger;
         this.update(tags);
     },
 

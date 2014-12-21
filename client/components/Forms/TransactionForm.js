@@ -14,7 +14,8 @@ var FormMixin = require('../../mixins/FormMixin');
 
 var FormModels = require('../../common/FormModels');
 
-var TagField = require('../../plugins/TagField');
+//var TagField = require('../../plugins/TagField');
+var ComboBoxGenerator = require('../../generators/ComboBoxGenerator');
 
 var TransactionForm = React.createClass({
 
@@ -35,11 +36,16 @@ var TransactionForm = React.createClass({
         return ['cat1', 'cat2', 'cato'];
     },
 
+    renderComboBox: function () {
+        return ComboBoxGenerator('CategoriesComboBox')(/*fieldModel*/)(/*?run?*/);
+    },
+
     render: function () {
+        // <TagField placeholder="Введите теги" tags={this.getTags()} />
         return (
             <div className="transaction-form">
                 <form>
-                    <TagField placeholder="Введите теги" tags={this.getTags()} />
+
                     <Input type="text" placeholder="Сумма" />
                     <Input type="textarea" placeholder="Описание" />
 
