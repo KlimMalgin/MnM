@@ -5,9 +5,9 @@
 
 var Reflux = require('reflux');
 
-var CitiesApi = require('../common/api/CitiesApi');
+//var CitiesApi = require('../common/api/CitiesApi');
 
-var loadCitiesDef = {
+/*var loadCitiesDef = {
     preEmit : function(name, count, exclude) {
         var phrase = name.getOrElse("");
         if (phrase) {
@@ -22,10 +22,10 @@ var loadCitiesDef = {
             DropdownActions.receiveCities({cities: []});
         }
     }
-};
+};*/
 
 var DropdownActions = {
-    changePhrase: Reflux.createAction(loadCitiesDef),
+    changePhrase: Reflux.createAction(/*loadCitiesDef*/),
 
     addTags: Reflux.createAction(),
     removeTag: Reflux.createAction(),
