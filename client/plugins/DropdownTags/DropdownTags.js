@@ -52,7 +52,8 @@ var DropdownTags = React.createClass({
                     behavior: 'none', // none|focus|static
                     type: 'info'      // info|error
                 }
-            }
+            },
+            dataStore: null
         };
     },
 
