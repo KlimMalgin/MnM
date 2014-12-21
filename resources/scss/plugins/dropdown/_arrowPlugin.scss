@@ -1,0 +1,18 @@
+
+.dropdown-plugin {
+
+  &.arrow {
+    @include absolute(0,0);
+    padding: 8px 15px 7px 15px;
+    cursor: pointer;
+
+    &.active {
+      color: #1cb8d1;
+    }
+
+    &:hover {
+      color: #1cb8d1;
+    }
+  }
+
+}

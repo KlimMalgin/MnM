@@ -1,0 +1,154 @@
+
+
+@import "variables";
+
+@import "arrowPlugin";
+@import "messagePlugin";
+@import "labelPlugin";
+@import "addValuePlugin";
+
+
+.dropdown-tags {
+  @include relative;
+  padding-top: 30px;
+  z-index: 1000;
+}
+
+.dropdown-tags-field {
+
+  .dropdown-tags-input {
+    opacity:0;
+    border: 0;
+
+    &.visible {
+      opacity:1;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &.form-control {
+    padding: 6px 12px 6px 7px;
+    min-height: 42px;
+    height: auto;
+    z-index: 9;
+  }
+
+  &:hover {
+    cursor: text;
+  }
+
+  &.focused {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+
+  .tag {
+    @include relative(-1px);
+    background-color: $default-color;
+    margin-right: 4px;
+    font-size: 17px;
+    padding: 0 7px 2px 7px;
+    white-space: nowrap;
+    display: inline-block;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+
+    &.custom {
+      background-color: #b3b3b3;
+    }
+
+    &:after {
+      margin-left: 7px;
+      content: "X";
+    }
+
+    &:hover {
+      background-color: $default-color * 1.2;
+    }
+  }
+
+}
+
+.field-wrapper {
+  @include relative;
+
+  .hint-wrapper {
+    @include absolute(-1px, 0, 0, 0);
+
+    .auto-complete-hint {
+      color: #ccc;
+    }
+
+  }
+
+  input {
+    background-color: white;
+  }
+
+}
+
+.dropdown-hint-list {
+  @include absolute(100%);
+  @include size(100%, auto);
+  background-color: white;
+  border: solid 1px #5FD5FF;
+  border-radius: 3px;
+  text-align: center;
+  z-index: 1000;
+  padding: 15px 0;
+  margin: 0;
+
+  &.hint-empty {
+    display: none;
+  }
+
+}
+
+.dropdown-tags-list {
+  @include absolute(100%);
+  @include size(100%, auto);
+  background-color: white;
+  border: solid 1px $input-message-info-bg;
+  list-style: none;
+  border-radius: 3px;
+  overflow-y: scroll;
+  max-height: 300px;
+  z-index: 7;
+  padding: 0;
+  margin: -3px 0 0 0;
+
+  &.empty {
+    display: none;
+  }
+
+  .list-item {
+    font-size: 17px;
+    padding: 3px 0 3px 7px;
+
+    .highlight {
+      color: $input-message-info-bg;
+    }
+
+    &:hover {
+      background-color: $input-message-info-bg;
+      cursor: pointer;
+
+      .highlight {
+        color: #ffffff;
+      }
+
+    }
+
+    &.focused {
+      background-color: $input-message-info-bg;
+    }
+
+  }
+
+}

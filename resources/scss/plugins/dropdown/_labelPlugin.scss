@@ -1,0 +1,9 @@
+
+
+.dropdown-plugin {
+
+  &.control-label {
+    @include absolute(auto, auto, 41px, auto);
+  }
+
+}

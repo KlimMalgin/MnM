@@ -1,0 +1,71 @@
+
+
+.dropdown-plugin {
+
+  &.message-wrap {
+    @include relative;
+    z-index: 8;
+  }
+
+  .input-message {
+    @include transition(visibility 0s ease-in-out 0.1s, opacity 0.1s ease-in-out);
+    @include absolute(auto, auto, 0px, auto);
+    @include size(100%, auto);
+    border-radius: 5px 5px;
+    visibility:hidden;
+    min-height: 29px;
+    max-height: 45px;
+    font-size: 14px;
+    color: #ffffff;
+    z-index: 8;
+    opacity:0;
+
+    .text {
+      @include size(100%, auto);
+      padding: 4px 10px 4px 13px;
+      max-height: 45px;
+      overflow: hidden;
+    }
+
+    &.visible {
+      visibility:visible;
+      opacity:1;
+      @include transition-delay(0s);
+    }
+
+    &.info {
+      background-color: $input-message-info-bg;
+    }
+
+    &.error {
+      background-color: $input-message-error-bg;
+    }
+
+  }
+
+
+  .message-bg {
+    @include absolute(auto, auto, -5px, auto);
+    @include transition(visibility 0s ease-in-out 0.1s,
+                        opacity 0.1s ease-in-out);
+    @include size(100%, 13px);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 7;
+
+    &.visible {
+      visibility:visible;
+      opacity:1;
+      @include transition-delay(0s);
+    }
+
+    &.info {
+      background-color: $input-message-info-bg;
+    }
+    &.error {
+      background-color: $input-message-error-bg;
+    }
+  }
+
+
+}
