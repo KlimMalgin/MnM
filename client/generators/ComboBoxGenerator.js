@@ -3,23 +3,24 @@
  */
 'use strict';
 
-var Dropdown = require('../plugins/DropdownTags/DropdownTags');
+var DropdownCreator = require('../plugins/DropdownTags/DropdownTags');
+var TagsStore = require('../stores/TagsStore');
 
 var curry = require('core.lambda').curry;
 
 /**
- * TODO: Подключить сторы со всеми вариантами наборов данных для генерируемых ComboBox'ов
- *
+ * TODO: Распилить CitiesStore на два. Первый должен содержать phrase и hint, второй - набор данных для списка
+ * TODO: Сейчас есть PhraseStore. Он не используется. Нужно чтобы он хранил phrase и hint
  */
 
-var _dropdownCreator = function (store, fieldModel) {
+/*var _dropdownCreator = function (store, fieldModel) {
     return function () {
         return Dropdown({
             dataStore: store,
             field: fieldModel
         });
     };
-};
+};*/
 
 var ComboBoxGenerator = function (ComboBoxType) {
 
@@ -28,8 +29,8 @@ var ComboBoxGenerator = function (ComboBoxType) {
          * @param field модель-описание поля
          * @param dataStore хранилище с набором элементов для списка
          */
-        CategoriesComboBox: curry(2, _dropdownCreator(/*Store*/)),
-        CustomComboBox: curry(2, _dropdownCreator(/*Store*/))
+        CategoriesComboBox: curry(2, DropdownCreator(TagsStore))/*,
+        CustomComboBox: curry(2, _dropdownCreator(*//*Store*//*))*/
     };
 
     return types[ComboBoxType];
