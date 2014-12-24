@@ -23,8 +23,10 @@ var TagsStore = Reflux.createStore({
     init: function () {
         this.items = Option.from([]);
 
-        //this.listenTo(DropdownActions.receiveCities, this.handleReceiveCities);
+        this.listenTo(DropdownActions.changePhrase, this.handleChangePhrase);
         this.listenTo(TagsActions.receiveTags, this.handleReceiveTags);
+
+        TagsActions.loadTags(Option.from(""));
     },
 
     getDefaultData: function() {
@@ -37,13 +39,17 @@ var TagsStore = Reflux.createStore({
         this.trigger(this.items);
     },
 
+    handleChangePhrase: function (phrase) {
+        TagsActions.loadTags(phrase);
+    },
+
     handleReceiveTags: function(data) {
         //var cities = pLens('cities').run(data).chain(storeGet).map(_mapValues).getOrElse([]);
-        debugger;
-        var s = pLens('data.results').run(data).chain(storeGet);
-        var p = lens('data.results').run(data);
+        //debugger;
+        /*var s = pLens('data.results').run(data).chain(storeGet);
+        var p = lens('data.results').run(data);*/
 
-        this.update(data);
+        this.update(Option.from(data.results));
     }
 
 });

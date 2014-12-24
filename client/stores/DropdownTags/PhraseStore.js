@@ -50,7 +50,8 @@ var _hintCreator = curry(4, function (context, citiesValue, phraseValue, focusVa
         if (focusValue > 0) {
             result = "";
         } else {
-            result = citiesValue[focusValue].name.substr(phraseValue.length);
+            // TODO: Фраза жестко завязана на название поля "name". Нужно сделать название поля настраиваемым
+            result = citiesValue[focusValue].text.substr(phraseValue.length);
         }
 
         context.composed.hint = Option.from(result);
@@ -69,7 +70,7 @@ var _phraseCreator = curry(4, function (context, citiesValue, phraseValue, focus
         _hintCreator(context, citiesValue, phraseValue, focusValue)();
 
         if (focusValue > 0) {
-            result = citiesValue[focusValue].name;
+            result = citiesValue[focusValue].text;
         } else {
             result = phraseValue;
         }

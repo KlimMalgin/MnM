@@ -16,6 +16,7 @@ var curry = require('core.lambda').curry;
  *
  * TODO: Перевести компонент на TagsStore
  * TODO: Распилить события и transport-api
+ * TODO: Фраза жестко завязана на название поля "name". Нужно сделать название поля настраиваемым
  */
 
 /*var _dropdownCreator = function (store, fieldModel) {
