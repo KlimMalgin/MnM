@@ -20,7 +20,7 @@ var Reflux = require('reflux'),
 var DropdownActions = require('../../actions/DropdownActions'),
     ValidationActions = require('../../actions/ValidationActions');
 
-var CitiesStore = require('../../stores/DropdownTags/CitiesStore');
+var PhraseStore = require('../../stores/DropdownTags/PhraseStore');
 var FocusedStore = require('../../stores/DropdownTags/FocusedStore');
 var FieldFocusStore = require('../../stores/DropdownTags/FieldFocusStore');
 var TagsStore = require('../../stores/DropdownTags/TagsStore');
@@ -39,6 +39,7 @@ var DropdownTagsCreator = function (dataStore) {
             Reflux.listenTo(TagsStore, 'onTagsChanged'),
             Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
             Reflux.connect(dataStore),
+            Reflux.connect(PhraseStore),
             Reflux.connect(FieldFocusStore, 'fieldFocus'),
             DocumentListenerMixin
         ],
@@ -60,6 +61,7 @@ var DropdownTagsCreator = function (dataStore) {
 
         getInitialState: function () {
             return {
+                items: [],
                 message: {
                     visible: false
                 }
@@ -145,7 +147,7 @@ var DropdownTagsCreator = function (dataStore) {
                     }
                 },
                 pluginState = {
-                    arrow: !!this.state.cities.getOrElse([]).length
+                    arrow: !!this.state.items.getOrElse([]).length
                 };
 
             return (
@@ -168,7 +170,7 @@ var DropdownTagsCreator = function (dataStore) {
                         onFocus={this.handleFocusField}
                     />
                     <DropdownTagsList
-                        list={this.state.cities}
+                        list={this.state.items}
                         phrase={this.state.phrase}
                         focused={this.state.focused}
                         fieldFocus={this.state.fieldFocus}

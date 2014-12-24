@@ -35,6 +35,8 @@ var DropdownActions = {
     nextFocused: Reflux.createAction(),
     prevFocused: Reflux.createAction(),
 
+    updateItems: Reflux.createAction(),
+
     enableFieldFocus: Reflux.createAction(),
     disableFieldFocus: Reflux.createAction(),
 

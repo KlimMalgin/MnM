@@ -32,6 +32,8 @@ var _createCitiesOption = function (arr) {
  */
 var DataStore = Reflux.createStore({
     init: function () {
+
+        // TODO: Раньше поле называлось cities. Могут быть несовпадения по именам в Dropdown
         this.items = Option.from([]);
 
         this.listenTo(DropdownActions.receiveCities, this.handleReceiveCities);
@@ -42,7 +44,8 @@ var DataStore = Reflux.createStore({
     },
 
     update : function(items) {
-        this.trigger(this.items = items);
+        DropdownActions.updateItems(this.items = items);
+        this.trigger(this.items);
     },
 
     handleReceiveCities: function(data) {
