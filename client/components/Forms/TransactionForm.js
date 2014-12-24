@@ -37,15 +37,17 @@ var TransactionForm = React.createClass({
     },
 
     renderComboBox: function () {
-        return ComboBoxGenerator('CategoriesComboBox')(/*fieldModel*/)(/*?run?*/);
+        return ComboBoxGenerator('CategoriesComboBox'); //(/*fieldModel*/)(/*?run?*/);
     },
 
     render: function () {
         // <TagField placeholder="Введите теги" tags={this.getTags()} />
+        var ComboBox = this.renderComboBox();
+
         return (
             <div className="transaction-form">
                 <form>
-
+                    <ComboBox />
                     <Input type="text" placeholder="Сумма" />
                     <Input type="textarea" placeholder="Описание" />
 

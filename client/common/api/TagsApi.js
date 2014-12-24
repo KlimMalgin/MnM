@@ -2,7 +2,7 @@
  * Created by bas on 16.10.2014.
  */
 
-var createTransport = require('./createTransport');
+var createTransport = require('../transports/xhr');
 
 var loadTagsTransport = createTransport({
     method: "POST",

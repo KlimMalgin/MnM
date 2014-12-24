@@ -3,36 +3,47 @@
  */
 'use strict';
 
-var Reflux = require('reflux');
 var Option = require('fantasy-options').Option;
 
-var TagsActions = require('../actions/TagsActions'),
-    DropdownActions = require('../actions/DropdownActions');
+var Reflux = require('reflux');
+var merge = require('react/lib/merge');
+
+var storeGet = require('../utils/storeGet'),
+    pLens = require('../utils/lens');
+
+var lens = require('fantasy-lenses').Lens.objectLens;
+
+var DropdownActions = require('../actions/DropdownActions'),
+    TagsActions = require('../actions/TagsActions');
+
+
+
 
 var TagsStore = Reflux.createStore({
     init: function () {
-        this.tags = Option.None;
+        this.items = Option.from([]);
 
-        this.listenTo(TagsActions.receiveTags, this.handleChangeTags);
-        this.listenTo(DropdownActions.changePhrase, this.handleChangeDropdownField);
-
+        //this.listenTo(DropdownActions.receiveCities, this.handleReceiveCities);
+        this.listenTo(TagsActions.receiveTags, this.handleReceiveTags);
     },
 
     getDefaultData: function() {
-        return this.tags;
+        return this.items;
     },
 
-    update : function(tags) {
-        this.trigger(this.tags = tags);
+    update : function(items) {
+        // TODO: При наличии нескольких контролов на странице, все они будут реагировать на это событие. Нужно продумать разделение реакции, чтобы каждый реагировал только на свое событие
+        DropdownActions.updateItems(this.items = items);
+        this.trigger(this.items);
     },
 
-    handleChangeTags: function (tags) {
+    handleReceiveTags: function(data) {
+        //var cities = pLens('cities').run(data).chain(storeGet).map(_mapValues).getOrElse([]);
         debugger;
-        this.update(tags);
-    },
+        var s = pLens('data.results').run(data).chain(storeGet);
+        var p = lens('data.results').run(data);
 
-    handleChangeDropdownField: function (phrase) {
-        TagsActions.loadTags(phrase);
+        this.update(data);
     }
 
 });

@@ -61,7 +61,7 @@ var DropdownTagsCreator = function (dataStore) {
 
         getInitialState: function () {
             return {
-                items: [],
+                items: Option.from([]),
                 message: {
                     visible: false
                 }
