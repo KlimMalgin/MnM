@@ -5,4 +5,7 @@ build/
 .idea_modules/
 node_modules/
 bower_components/
-
+parse/config/*
+parse/public/*
+parse.exe
+ParseConsole.exe
