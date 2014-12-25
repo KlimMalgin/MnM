@@ -4,7 +4,7 @@
 'use strict';
 
 var DropdownCreator = require('../plugins/DropdownTags/DropdownTags');
-var TagsStore = require('../stores/TagsStore');
+var TagsListStore = require('../stores/TagsListStore');
 
 var DropdownDataStore = require('../stores/DropdownTags/DataStore');
 
@@ -35,7 +35,7 @@ var ComboBoxGenerator = function (ComboBoxType) {
          * @param field модель-описание поля
          * @param dataStore хранилище с набором элементов для списка
          */
-        CategoriesComboBox: DropdownCreator(TagsStore)/*,
+        CategoriesComboBox: DropdownCreator(TagsListStore)/*,
         CustomComboBox: curry(2, _dropdownCreator(*//*Store*//*))*/
     };
 

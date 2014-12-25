@@ -8,18 +8,13 @@ var Option = require('fantasy-options').Option;
 var Reflux = require('reflux');
 var merge = require('react/lib/merge');
 
-var storeGet = require('../utils/storeGet'),
-    pLens = require('../utils/lens');
-
-var lens = require('fantasy-lenses').Lens.objectLens;
-
 var DropdownActions = require('../actions/DropdownActions'),
     TagsActions = require('../actions/TagsActions');
 
 
 
 
-var TagsStore = Reflux.createStore({
+var TagsListStore = Reflux.createStore({
     init: function () {
         this.items = Option.from([]);
 
@@ -44,14 +39,9 @@ var TagsStore = Reflux.createStore({
     },
 
     handleReceiveTags: function(data) {
-        //var cities = pLens('cities').run(data).chain(storeGet).map(_mapValues).getOrElse([]);
-        //debugger;
-        /*var s = pLens('data.results').run(data).chain(storeGet);
-        var p = lens('data.results').run(data);*/
-
         this.update(Option.from(data.results));
     }
 
 });
 
-module.exports = TagsStore;
+module.exports = TagsListStore;
