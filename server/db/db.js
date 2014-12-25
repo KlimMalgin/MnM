@@ -25,11 +25,12 @@ var select = curry(3, function (objectType, params, callback) {
 });
 
 var getUser = curry(2, function (params, callback) {
-    //db.findMany(objectType, params, callback);
     db.getUser(params.username, params.password, callback);
 });
 
-// getUser (userName, password, callback)
+var cloudRun = curry(3, function (functionName, params, callback) {
+    db.cloudRun(functionName, params, callback);
+});
 
 module.exports = {
     /**
@@ -57,7 +58,18 @@ module.exports = {
      */
     select: select,
 
+    /**
+     * Запрос сессии пользователя
+     */
+    getUser: getUser,
 
-    getUser: getUser
+    /**
+     * Запустит выполнение метода в облаке Parse
+     * @param {String} functionName имя функции
+     * @param {Object} params параметры
+     * @param {Function} callback Метод обратного вызова. Получит результат выполнения указанной функции,
+     * соответствующий указанным параметрам (error, response)
+     */
+    cloudRun: cloudRun
 
 };

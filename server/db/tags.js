@@ -15,9 +15,11 @@ module.exports = {
     //insert: db.insert('Transaction'),
 
     /**
-     * Выполнит select для Tags
-     * @param {Object} params параметры фильтрации выборки
-     * @param {Function} callback Получит выбранные транзакции
+     * Запустит выполнение функции getTagsByPhrase в облаке
+     * @param {Object} params параметры функции
+     *  - userId objectId пользователя у которого берем теги
+     *  - phrase фраза по которой фильтрова теги
+     * @param {Function} callback Получит выбранные теги
      */
-    select: db.select('Tags')
+    select: db.cloudRun('getTagsByPhrase')
 };
