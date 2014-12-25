@@ -20,7 +20,7 @@ var Reflux = require('reflux'),
 var DropdownActions = require('../../actions/DropdownActions'),
     ValidationActions = require('../../actions/ValidationActions');
 
-var PhraseStore = require('../../stores/DropdownTags/PhraseStore');
+var PhraseStoreCreator = require('../../stores/DropdownTags/PhraseStore');
 var FocusedStore = require('../../stores/DropdownTags/FocusedStore');
 var FieldFocusStore = require('../../stores/DropdownTags/FieldFocusStore');
 var TagsStore = require('../../stores/DropdownTags/TagsStore');
@@ -29,7 +29,10 @@ var MessagePlugin = require('./plugin/Message');
 var LabelPlugin = require('./plugin/Label');
 
 
-var DropdownTagsCreator = function (dataStore) {
+var DropdownTagsCreator = function (config) {
+    var DataStore = config.DataStore;
+    var PhraseStore = PhraseStoreCreator(config);
+
     return React.createClass({
 
         mixins: [
@@ -38,7 +41,7 @@ var DropdownTagsCreator = function (dataStore) {
             Reflux.connect(TagsStore, 'tags'),
             //Reflux.listenTo(TagsStore, 'onTagsChanged'),
             Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
-            Reflux.connect(dataStore),
+            Reflux.connect(DataStore),
             Reflux.connect(PhraseStore),
             Reflux.connect(FieldFocusStore, 'fieldFocus'),
             DocumentListenerMixin
@@ -48,9 +51,9 @@ var DropdownTagsCreator = function (dataStore) {
             return {
                 field: {
                     maxTags: 3,
-                    placeholder: '',
+                    placeholder: 'place',
                     message: {
-                        text: '',
+                        text: 'service message',
                         behavior: 'none', // none|focus|static
                         type: 'info'      // info|error
                     }
