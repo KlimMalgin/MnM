@@ -36,7 +36,7 @@ var DropdownTagsCreator = function (dataStore) {
             ListenerMixin,
             Reflux.connect(FocusedStore, 'focused'),
             Reflux.connect(TagsStore, 'tags'),
-            Reflux.listenTo(TagsStore, 'onTagsChanged'),
+            //Reflux.listenTo(TagsStore, 'onTagsChanged'),
             Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
             Reflux.connect(dataStore),
             Reflux.connect(PhraseStore),
@@ -90,9 +90,9 @@ var DropdownTagsCreator = function (dataStore) {
             return this.props.field.maxTags <= this.state.tags.length;
         },
 
-        onTagsChanged: function (tags) {
+        /*onTagsChanged: function (tags) {
             ValidationActions.validate(this.props.field, tags);
-        },
+        },*/
 
         getFieldActions: function () {
             return {
