@@ -5,22 +5,27 @@
 
 
 var Reflux = require('reflux');
-
+var Option = require('fantasy-options').Option;
 var TagsApi = require('../common/api/TagsApi');
+var userConst = require('../constants/AppConstants').lStorage;
 
 var loadTagsDef = {
-    preEmit : function(name, count) {
-        var phrase = name.getOrElse("");
-        if (phrase) {
-            TagsApi.loadTags({
-                body: {
-                    /*name: phrase || ""/*,
-                     count: count || 50*/
-                }
-            }).done(TagsActions.receiveTags);
-        } else {
-            TagsActions.receiveTags({data: {results:[]}});
-        }
+    preEmit : function(phrase) {
+        var user = Option.from(store.get(userConst.USER));
+
+        phrase.chain(function (phraseValue) {
+            user.fold(function (userObject) {
+                TagsApi.loadTags({
+                    body: {
+                        userId: userObject.objectId,
+                        phrase: phraseValue
+                    }
+                }).done(TagsActions.receiveTags);
+            }, function () {
+                TagsActions.receiveTags({data: {results:[]}});
+            });
+        });
+
     }
 };
 
