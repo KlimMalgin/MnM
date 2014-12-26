@@ -8,6 +8,7 @@ var Reflux = require('reflux');
 var Option = require('fantasy-options').Option;
 var TagsApi = require('../common/api/TagsApi');
 var userConst = require('../constants/AppConstants').lStorage;
+var store = require('store');
 
 var loadTagsDef = {
     preEmit : function(phrase) {
