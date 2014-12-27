@@ -28,8 +28,19 @@ var DropdownTagsListItem = React.createClass({
         }
     },
 
+    highlighter: function (text, target) {
+        var arr = text.split(target);
+
+        return arr.map(function (item, index, list) {
+            var result = [];
+            result.push(<span>{item}</span>);
+            index < list.length-1 && result.push(<span className="highlight">{target}</span>);
+            return result;
+        });
+    },
+
     render: function () {
-        var item = <li><span className="highlight">{this.props.highlight}</span><span>{this.props.text}</span></li>;
+        var item = <li>{this.highlighter(this.props.text, this.props.highlight)}</li>;
 
         return this.transferPropsTo(item);
     }

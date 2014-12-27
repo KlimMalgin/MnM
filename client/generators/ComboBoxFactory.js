@@ -25,7 +25,7 @@ var ComboBoxFactory = function (ComboBoxType) {
             /**
              * Включить/отключить полнотекстовый поиск при выборке элементов из базы
              */
-            FullTextSearch: false,
+            FullTextSearch: true,
             /**
              * Описание кастомных событий loadComboBoxItems и receiveComboBoxItems
              */

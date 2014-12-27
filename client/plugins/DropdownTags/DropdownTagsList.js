@@ -57,13 +57,12 @@ var DropdownTagsListCreator = function (config) {
 
         renderItem: function (item, index) {
             var cls         = {},
-                highlight   = this.v.focused === -1 ? this.v.phrase : "",
-                text        = this.v.focused === -1 ? item[DisplayField].substr(this.v.phrase.length) : item[DisplayField];
+                highlight   = this.v.focused === -1 ? this.v.phrase : "";
 
             cls['list-item']    = true;
             cls['focused']      = index === this.v.focused;
 
-            return <ListItem onClick={_clickListItem(this)(item[DisplayField])} className={cs(cls)} highlight={highlight} text={text} />;
+            return <ListItem onClick={_clickListItem(this)(item[DisplayField])} className={cs(cls)} highlight={highlight} text={item[DisplayField]} />;
         },
 
         renderList: function (cls) {
