@@ -19,69 +19,74 @@ var _clickListItem = curry(2, function (context, itemName) {
     };
 });
 
-var DropdownTagsList = React.createClass({
+var DropdownTagsListCreator = function (config) {
+    var DisplayField = config.DisplayProperty || "name";
 
-    propTypes : {
-        list        : pt.object,
-        focused     : pt.object
-    },
+    return React.createClass({
 
-    getDefaultProps : function() {
-        return {
-            list        : Option.from([]),
-            focused     : Option.from(-1),
-            phrase      : Option.from("")
-        };
-    },
+        propTypes : {
+            list        : pt.object,
+            focused     : pt.object
+        },
 
-    v: {
-        list: [],
-        focused: -1,
-        phrase: "",
-        fieldFocus: false
-    },
+        getDefaultProps : function() {
+            return {
+                list        : Option.from([]),
+                focused     : Option.from(-1),
+                phrase      : Option.from("")
+            };
+        },
 
-    componentWillReceiveProps: function (nextProps) {
-        this.v.list         = nextProps.list.getOrElse([]);
-        this.v.focused      = nextProps.focused.getOrElse(-1);
-        this.v.phrase       = nextProps.phrase.getOrElse("");
-        this.v.fieldFocus   = nextProps.fieldFocus;
-    },
+        v: {
+            list: [],
+            focused: -1,
+            phrase: "",
+            fieldFocus: false
+        },
 
-    renderListItems: function (itemRenderer) {
-        return this.v.list.map(itemRenderer);
-    },
+        componentWillReceiveProps: function (nextProps) {
+            this.v.list         = nextProps.list.getOrElse([]);
+            this.v.focused      = nextProps.focused.getOrElse(-1);
+            this.v.phrase       = nextProps.phrase.getOrElse("");
+            this.v.fieldFocus   = nextProps.fieldFocus;
+        },
 
-    renderItem: function (item, index) {
-        var cls         = {},
-            highlight   = this.v.focused === -1 ? this.v.phrase : "",
-            text        = this.v.focused === -1 ? item.name.substr(this.v.phrase.length) : item.name;
+        renderListItems: function (itemRenderer) {
+            return this.v.list.map(itemRenderer);
+        },
 
-        cls['list-item']    = true;
-        cls['focused']      = index === this.v.focused;
+        renderItem: function (item, index) {
+            var cls         = {},
+                highlight   = this.v.focused === -1 ? this.v.phrase : "",
+                text        = this.v.focused === -1 ? item[DisplayField].substr(this.v.phrase.length) : item[DisplayField];
 
-        return <ListItem onClick={_clickListItem(this)(item.name)} className={cs(cls)} highlight={highlight} text={text} />;
-    },
+            cls['list-item']    = true;
+            cls['focused']      = index === this.v.focused;
 
-    renderList: function (cls) {
-        return (<ul className={cs(cls)}>
+            return <ListItem onClick={_clickListItem(this)(item[DisplayField])} className={cs(cls)} highlight={highlight} text={text} />;
+        },
+
+        renderList: function (cls) {
+            return (<ul className={cs(cls)}>
             {this.renderListItems(this.renderItem)}
-        </ul>);
-    },
+            </ul>);
+        },
 
-    renderHint: function (cls) {
-        return <div className={cs(cls)}>По данному запросу отсутствуют результаты</div>;
-    },
+        renderHint: function (cls) {
+            return <div className={cs(cls)}>По данному запросу отсутствуют результаты</div>;
+        },
 
-    render: function () {
-        var list_classes = {},
-            empty = !this.v.list.length || !this.v.fieldFocus;
+        render: function () {
+            var list_classes = {},
+                empty = !this.v.list.length || !this.v.fieldFocus;
 
-        list_classes["dropdown-tags-list"] = true;
-        list_classes["empty"] = empty;
+            list_classes["dropdown-tags-list"] = true;
+            list_classes["empty"] = empty;
 
-        return this.renderList(list_classes);
-    }
-});
+            return this.renderList(list_classes);
+        }
+    });
+};
 
-module.exports = DropdownTagsList;
+
+module.exports = DropdownTagsListCreator;

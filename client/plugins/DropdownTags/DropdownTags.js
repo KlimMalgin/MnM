@@ -12,13 +12,11 @@ var React = require('react'),
 var DocumentListenerMixin = require('../../mixins/DropdownTags/DocumentListenerMixin');
 
 var DropdownTagsField = require('./DropdownTagsField');
-var DropdownTagsList = require('./DropdownTagsList');
 
 var Reflux = require('reflux'),
     ListenerMixin = Reflux.ListenerMixin;
 
-var DropdownActions = require('../../actions/DropdownActions'),
-    ValidationActions = require('../../actions/ValidationActions');
+var DropdownActions = require('../../actions/DropdownActions');
 
 var PhraseStoreCreator = require('../../stores/DropdownTags/PhraseStore');
 var FocusedStore = require('../../stores/DropdownTags/FocusedStore');
@@ -32,6 +30,7 @@ var LabelPlugin = require('./plugin/Label');
 var DropdownTagsCreator = function (config) {
     var DataStore = config.DataStore;
     var PhraseStore = PhraseStoreCreator(config);
+    var ComboBoxList = config.ItemsList(config);
 
     return React.createClass({
 
@@ -41,7 +40,7 @@ var DropdownTagsCreator = function (config) {
             Reflux.connect(TagsStore, 'tags'),
             //Reflux.listenTo(TagsStore, 'onTagsChanged'),
             Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
-            Reflux.connect(DataStore),
+            Reflux.connect(DataStore, 'items'),
             Reflux.connect(PhraseStore),
             Reflux.connect(FieldFocusStore, 'fieldFocus'),
             DocumentListenerMixin
@@ -172,7 +171,7 @@ var DropdownTagsCreator = function (config) {
                         placeholder={this.props.field.placeholder}
                         onFocus={this.handleFocusField}
                     />
-                    <DropdownTagsList
+                    <ComboBoxList
                         list={this.state.items}
                         phrase={this.state.phrase}
                         focused={this.state.focused}

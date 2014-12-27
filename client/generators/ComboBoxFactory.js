@@ -4,6 +4,7 @@
 'use strict';
 
 var ComboBoxCreator = require('../plugins/DropdownTags/DropdownTags');
+var ComboBoxListCreator = require('../plugins/DropdownTags/DropdownTagsList');
 var TagsListStore = require('../stores/TagsListStore');
 
 /**
@@ -23,7 +24,9 @@ var ComboBoxFactory = function (ComboBoxType) {
             /**
              * Наименование поля элемента списка, которое используется как имя тега
              */
-            DisplayProperty: 'text'
+            DisplayProperty: 'text',
+
+            ItemsList: ComboBoxListCreator
         })
 
     };

@@ -39,7 +39,7 @@ var TagsListStore = Reflux.createStore({
     },
 
     handleReceiveTags: function(data) {
-        this.update(Option.from(data.results));
+        this.update(Option.from(data.result));
     }
 
 });
