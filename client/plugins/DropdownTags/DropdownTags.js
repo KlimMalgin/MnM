@@ -31,7 +31,7 @@ var DropdownTagsCreator = function (config) {
     var DataStore = config.DataStoreCreator(config);
     var PhraseStore = PhraseStoreCreator(config);
     var ComboBoxList = config.ItemsListCreator(config);
-
+    var FullTextSearch = config.FullTextSearch || false;
 
     return React.createClass({
 
@@ -160,7 +160,7 @@ var DropdownTagsCreator = function (config) {
                     <DropdownTagsField
                         className="form-control"
                         tags={this.state.tags}
-                        hint={this.state.hint}
+                        hint={FullTextSearch ? Option.of("") : this.state.hint}
                         phrase={this.state.phrase}
                         focused={this.state.focused}
                         focusInput={this.state.message.visible}
