@@ -28,9 +28,10 @@ var LabelPlugin = require('./plugin/Label');
 
 
 var DropdownTagsCreator = function (config) {
-    var DataStore = config.DataStore;
+    var DataStore = config.DataStoreCreator(config);
     var PhraseStore = PhraseStoreCreator(config);
-    var ComboBoxList = config.ItemsList(config);
+    var ComboBoxList = config.ItemsListCreator(config);
+
 
     return React.createClass({
 

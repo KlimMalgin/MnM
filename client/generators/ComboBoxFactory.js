@@ -5,7 +5,8 @@
 
 var ComboBoxCreator = require('../plugins/DropdownTags/DropdownTags');
 var ComboBoxListCreator = require('../plugins/DropdownTags/DropdownTagsList');
-var TagsListStore = require('../stores/TagsListStore');
+var ComboBoxItemsStoreCreator = require('../stores/ComboBoxItemsStore');
+var TagsActions = require('../actions/TagsActions');
 
 /**
  *
@@ -26,14 +27,18 @@ var ComboBoxFactory = function (ComboBoxType) {
              */
             FullTextSearch: false,
             /**
-             * Хранилище текущего списка элементов ComboBox'a
+             * Описание кастомных событий loadComboBoxItems и receiveComboBoxItems
              */
-            DataStore: TagsListStore,
+            Actions: TagsActions,
             /**
-             * Компонент выпадающего списка, который будет
+             * Конструктор хранилища текущего списка элементов ComboBox'a
+             */
+            DataStoreCreator: ComboBoxItemsStoreCreator,
+            /**
+             * Конструктор компонента выпадающего списка, который будет
              * использован при генерации текущего контрола
              */
-            ItemsList: ComboBoxListCreator
+            ItemsListCreator: ComboBoxListCreator
         })
 
     };

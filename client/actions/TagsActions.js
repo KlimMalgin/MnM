@@ -10,38 +10,53 @@ var TagsApi = require('../common/api/TagsApi');
 var userConst = require('../constants/AppConstants').lStorage;
 var store = require('store');
 
-var loadTagsDef = {
-    preEmit : function(phrase) {
-        var user = Option.from(store.get(userConst.USER));
 
-        phrase
-            .isNot(Option.of(""))
-            .fold(
+var ComboBoxActionsCreator = function (config) {
+    var FullTextSearch = config.FullTextSearch || false;
+
+    var loadItemsDef = {
+        preEmit : function(phrase) {
+            var user = Option.from(store.get(userConst.USER));
+
+            phrase
+                .isNot(Option.of(""))
+                .fold(
                 function (phraseValue) {
                     user.fold(function (userObject) {
                         TagsApi.loadTags({
                             body: {
                                 userId: userObject.objectId,
-                                phrase: phraseValue
+                                phrase: phraseValue,
+                                fullTextSearch: FullTextSearch
                             }
-                        }).done(TagsActions.receiveTags);
+                        }).done(ActionsObject.receiveComboBoxItems);
                     }, function () {
                         // TODO: У Action-сущностей есть метод handler?
-                        TagsActions.receiveTags({data: {results:[]}});
+                        ActionsObject.receiveComboBoxItems({result:[]});
                     });
                 },
                 function () {
-                    TagsActions.receiveTags({data: {results:[]}});
+                    ActionsObject.receiveComboBoxItems({result:[]});
                 }
             );
 
-    }
+        }
+    };
+
+    var receiveItemsDef = {
+        preEmit: function () {
+
+        }
+    };
+
+    var ActionsObject = {
+        loadComboBoxItems : Reflux.createAction(loadItemsDef),
+
+        receiveComboBoxItems : Reflux.createAction(receiveItemsDef)
+    };
+
+    return ActionsObject;
 };
 
-var TagsActions = {
-    loadTags : Reflux.createAction(loadTagsDef),
 
-    receiveTags : Reflux.createAction()
-};
-
-module.exports = TagsActions;
+module.exports = ComboBoxActionsCreator;
