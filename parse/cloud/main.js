@@ -12,7 +12,7 @@ Parse.Cloud.define("getTagsByPhrase", function(request, response) {
     success: function (results) {
       var result = [];
       for (var i = 0; i < results.length; ++i) {
-        if (results[i].get("text").indexOf(request.params.phrase) >= 0) {
+        if (searchCondition(results[i].get("text"), request.params)) {
           result.push(results[i]);
         }
       }
@@ -22,4 +22,15 @@ Parse.Cloud.define("getTagsByPhrase", function(request, response) {
       response.error("request tags failed!");
     }
   });
+
+  function searchCondition (text, params) {
+    if (!params.fullTextSearch && text.indexOf(params.phrase) === 0) {
+      return true;
+    } else
+    if (params.fullTextSearch && text.indexOf(params.phrase) >= 0) {
+      return true;
+    }
+
+    return false;
+  }
 });
