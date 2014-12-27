@@ -14,18 +14,26 @@ var loadTagsDef = {
     preEmit : function(phrase) {
         var user = Option.from(store.get(userConst.USER));
 
-        phrase.chain(function (phraseValue) {
-            user.fold(function (userObject) {
-                TagsApi.loadTags({
-                    body: {
-                        userId: userObject.objectId,
-                        phrase: phraseValue
-                    }
-                }).done(TagsActions.receiveTags);
-            }, function () {
-                TagsActions.receiveTags({data: {results:[]}});
-            });
-        });
+        phrase
+            .isNot(Option.of(""))
+            .fold(
+                function (phraseValue) {
+                    user.fold(function (userObject) {
+                        TagsApi.loadTags({
+                            body: {
+                                userId: userObject.objectId,
+                                phrase: phraseValue
+                            }
+                        }).done(TagsActions.receiveTags);
+                    }, function () {
+                        // TODO: У Action-сущностей есть метод handler?
+                        TagsActions.receiveTags({data: {results:[]}});
+                    });
+                },
+                function () {
+                    TagsActions.receiveTags({data: {results:[]}});
+                }
+            );
 
     }
 };

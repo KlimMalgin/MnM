@@ -21,7 +21,9 @@ var TagsListStore = Reflux.createStore({
         this.listenTo(DropdownActions.changePhrase, this.handleChangePhrase);
         this.listenTo(TagsActions.receiveTags, this.handleReceiveTags);
 
-        TagsActions.loadTags(Option.from(""));
+        TagsActions.loadTags(Option.from(""), {
+            fulltext: false
+        });
     },
 
     getDefaultData: function() {
@@ -35,7 +37,9 @@ var TagsListStore = Reflux.createStore({
     },
 
     handleChangePhrase: function (phrase) {
-        TagsActions.loadTags(phrase);
+        TagsActions.loadTags(phrase, {
+            fulltext: false
+        });
     },
 
     handleReceiveTags: function(data) {

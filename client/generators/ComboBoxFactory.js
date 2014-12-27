@@ -18,14 +18,21 @@ var ComboBoxFactory = function (ComboBoxType) {
          */
         CategoriesComboBox: ComboBoxCreator({
             /**
+             * Наименование поля элемента списка, которое используется как имя тега
+             */
+            DisplayProperty: 'text',
+            /**
+             * Включить/отключить полнотекстовый поиск при выборке элементов из базы
+             */
+            FullTextSearch: false,
+            /**
              * Хранилище текущего списка элементов ComboBox'a
              */
             DataStore: TagsListStore,
             /**
-             * Наименование поля элемента списка, которое используется как имя тега
+             * Компонент выпадающего списка, который будет
+             * использован при генерации текущего контрола
              */
-            DisplayProperty: 'text',
-
             ItemsList: ComboBoxListCreator
         })
 

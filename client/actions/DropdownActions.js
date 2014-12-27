@@ -5,27 +5,8 @@
 
 var Reflux = require('reflux');
 
-//var CitiesApi = require('../common/api/CitiesApi');
-
-/*var loadCitiesDef = {
-    preEmit : function(name, count, exclude) {
-        var phrase = name.getOrElse("");
-        if (phrase) {
-            CitiesApi.loadCities({
-                body: {
-                    name: phrase || "",
-                    count: count || 50,
-                    exclude: exclude || []
-                }
-            }).done(DropdownActions.receiveCities);
-        } else {
-            DropdownActions.receiveCities({cities: []});
-        }
-    }
-};*/
-
 var DropdownActions = {
-    changePhrase: Reflux.createAction(/*loadCitiesDef*/),
+    changePhrase: Reflux.createAction(),
 
     addTags: Reflux.createAction(),
     removeTag: Reflux.createAction(),
