@@ -15,7 +15,11 @@ var ComboBoxItemsStoreCreator = function (config) {
 
     return Reflux.createStore({
         init: function () {
-            this.items = Option.from([]);
+            //this.items = Option.from([]);
+
+            this.compose = {
+                items: Option.of([])
+            };
 
             this.listenTo(DropdownActions.changePhrase, this.handleChangePhrase);
             this.listenTo(Actions.receiveComboBoxItems, this.handleReceiveItems);
@@ -24,13 +28,14 @@ var ComboBoxItemsStoreCreator = function (config) {
         },
 
         getDefaultData: function() {
-            return this.items;
+            return this.compose;
         },
 
-        update : function(items) {
+        update : function(compose) {
+            this.compose = compose;
             // TODO: При наличии нескольких контролов на странице, все они будут реагировать на это событие. Нужно продумать разделение реакции, чтобы каждый реагировал только на свое событие
-            DropdownActions.updateItems(this.items = items);
-            this.trigger(this.items);
+            DropdownActions.updateItems(this.compose.items);
+            this.trigger(this.compose);
         },
 
         handleChangePhrase: function (phrase) {
@@ -38,7 +43,10 @@ var ComboBoxItemsStoreCreator = function (config) {
         },
 
         handleReceiveItems: function(data) {
-            this.update(Option.from(data.result));
+            //this.update(Option.from(data.result));
+            this.update({
+                items: Option.from(data.result)
+            });
         }
 
     });

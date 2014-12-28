@@ -41,7 +41,7 @@ var DropdownTagsCreator = function (config) {
             Reflux.connect(TagsStore, 'tags'),
             //Reflux.listenTo(TagsStore, 'onTagsChanged'),
             Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
-            Reflux.connect(DataStore, 'items'),
+            Reflux.connect(DataStore),
             Reflux.connect(PhraseStore),
             Reflux.connect(FieldFocusStore, 'fieldFocus'),
             DocumentListenerMixin
