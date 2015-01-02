@@ -55,7 +55,7 @@
     "gulp-sass": "~1.1.0",
     "gulp-streamify": "~0.0.5",
     "gulp-uglifyjs": "~0.4.4",
-    "node-parse-api": "git://github.com/KlimMalgin/node-parse-api",
+    "node-parse-api": "^0.3.1",
     "reactify": "~0.14.0",
     "unpathify": "~0.1.4",
     "vinyl-source-stream": "~1.0.0",

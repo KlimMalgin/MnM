@@ -15,8 +15,6 @@ var ComboBoxItemsStoreCreator = function (config) {
 
     return Reflux.createStore({
         init: function () {
-            //this.items = Option.from([]);
-
             this.compose = {
                 items: Option.of([])
             };

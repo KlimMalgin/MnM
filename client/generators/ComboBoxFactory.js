@@ -6,7 +6,7 @@
 var ComboBoxCreator = require('../plugins/DropdownTags/DropdownTags');
 var ComboBoxListCreator = require('../plugins/DropdownTags/DropdownTagsList');
 var ComboBoxItemsStoreCreator = require('../stores/ComboBoxItemsStore');
-var TagsActions = require('../actions/TagsActions');
+var TagsActionsCreator = require('../actions/TagsActions');
 
 /**
  *
@@ -29,7 +29,7 @@ var ComboBoxFactory = function (ComboBoxType) {
             /**
              * Описание кастомных событий loadComboBoxItems и receiveComboBoxItems
              */
-            Actions: TagsActions,
+            Actions: TagsActionsCreator,
             /**
              * Конструктор хранилища текущего списка элементов ComboBox'a
              */
