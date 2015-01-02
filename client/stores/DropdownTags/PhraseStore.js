@@ -38,7 +38,7 @@ var PhraseStoreCreator = function (config) {
     var _hintCreator = curry(4, function (context, citiesValue, phraseValue, focusValue) {
         return function hintCreator () {
             var result = "";
-            if (focusValue > 0) {
+            if (focusValue >= 0) {
                 result = "";
             } else {
                 result = citiesValue[focusValue][DisplayField].substr(phraseValue.length);
@@ -59,7 +59,7 @@ var PhraseStoreCreator = function (config) {
             var result = "";
             _hintCreator(context, citiesValue, phraseValue, focusValue)();
 
-            if (focusValue > 0) {
+            if (focusValue >= 0) {
                 result = citiesValue[focusValue][DisplayField];
             } else {
                 result = phraseValue;
