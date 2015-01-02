@@ -20,7 +20,7 @@ var FieldModels = {
         placeholder: 'Категории транзакции',
         validators: {
             sync: ap([
-                Validators.required
+                Validators.requiredArray
             ])
         }
     },

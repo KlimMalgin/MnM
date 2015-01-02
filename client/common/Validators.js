@@ -32,8 +32,16 @@ var stringLength = function(value) {
     return !!value && typeof value === "string" && value.trim().length || -1;
 };
 
+var arrayLength = function(value) {
+    return !!value && typeof value === "object" && value.length || -1;
+};
+
 var isNotEmptyString = function(value) {
     return stringLength(value) > 0;
+};
+
+var isNotEmptyArray = function(value) {
+    return arrayLength(value) > 0;
 };
 
 /**
@@ -72,6 +80,8 @@ var isPasswordStrongEnough = /[\W]/;
  * @returns {*[]}
  */
 var requiredMessage = constant(["Поле должно быть заполнено"]);
+
+var requiredItemsMessage = constant(["Выберите одно или несколько значений, либо введите свое"]);
 
 /**
  *
@@ -125,6 +135,7 @@ var Validators = {
     // Sync
     optional                : predicateValidator(constant(true))(''),
     required                : predicateValidator(isNotEmptyString)(requiredMessage),
+    requiredArray           : predicateValidator(isNotEmptyArray)(requiredItemsMessage),
     lengthEqual             : lengthValidator(stringLength)(equal)('равна'),
     lengthGreaterThan       : lengthValidator(stringLength)(gt)('больше'),
     lengthGreaterOrEqualTo  : lengthValidator(stringLength)(gte)('больше или равна'),
