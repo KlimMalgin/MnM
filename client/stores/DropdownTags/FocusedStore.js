@@ -14,11 +14,11 @@ var _lengthGetter = function (itemsValue) {
 };
 
 var _incrementFocus = function (focusedValue, citiesCountValue) {
-    return Option.from(focusedValue < (citiesCountValue - 1) ? focusedValue + 1 : -1);
+    return Option.from(focusedValue < (citiesCountValue - 1) ? focusedValue + 1 : 0);
 };
 
 var _decrementFocus = function (focusedValue, citiesCountValue) {
-    return Option.from(focusedValue >= 0 ? focusedValue - 1 : citiesCountValue - 1);
+    return Option.from(focusedValue > 0 ? focusedValue - 1 : citiesCountValue - 1);
 };
 
 /**
