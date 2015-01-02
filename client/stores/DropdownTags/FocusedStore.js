@@ -8,7 +8,10 @@ var Option = require('fantasy-options').Option;
 var Reflux = require('reflux');
 var DropdownActions = require('../../actions/DropdownActions');
 
-var PhraseStore = require('./PhraseStore');
+var _lengthGetter = function (itemsValue) {
+    var ln = itemsValue && itemsValue.length;
+    return !!ln ? ln : 0;
+};
 
 var _incrementFocus = function (focusedValue, citiesCountValue) {
     return Option.from(focusedValue < (citiesCountValue - 1) ? focusedValue + 1 : -1);
@@ -31,7 +34,7 @@ var FocusedItemStore = Reflux.createStore({
         this.listenTo(DropdownActions.nextFocused, this.handleFocusedNext);
         this.listenTo(DropdownActions.prevFocused, this.handleFocusedPrev);
         this.listenTo(DropdownActions.clearFocus,  this.handleFocusClear);
-        this.listenTo(DropdownActions.receiveCities, this.handleReceiveCities);
+        this.listenTo(DropdownActions.updateItems, this.handleReceiveCities);
 
         this.listenTo(DropdownActions.changePhrase, this.handleFocusClear);
     },
@@ -61,8 +64,8 @@ var FocusedItemStore = Reflux.createStore({
         this.update();
     },
 
-    handleReceiveCities: function (data) {
-        this.citiesCount = data.cities.length;
+    handleReceiveCities: function (itemsOption) {
+        this.citiesCount = itemsOption.chain(_lengthGetter);
     }
 
 });
