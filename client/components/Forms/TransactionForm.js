@@ -46,7 +46,7 @@ var TransactionForm = React.createClass({
         return (
             <div className="transaction-form">
                 <form>
-                    <ComboBox />
+                    <ComboBox field={this.formModel().tags} />
                     <Input type="text" placeholder="Сумма" />
                     <Input type="textarea" placeholder="Описание" />
 

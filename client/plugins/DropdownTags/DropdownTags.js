@@ -17,7 +17,9 @@ var Reflux = require('reflux'),
     ListenerMixin = Reflux.ListenerMixin;
 
 var DropdownActions = require('../../actions/DropdownActions');
+var ValidationActions = require('../../actions/ValidationActions');
 
+var ValidationStore = require('../../stores/ValidationStore');
 var PhraseStoreCreator = require('../../stores/DropdownTags/PhraseStore');
 var FocusedStore = require('../../stores/DropdownTags/FocusedStore');
 var FieldFocusStore = require('../../stores/DropdownTags/FieldFocusStore');
@@ -39,7 +41,8 @@ var DropdownTagsCreator = function (config) {
             ListenerMixin,
             Reflux.connect(FocusedStore, 'focused'),
             Reflux.connect(TagsStore, 'tags'),
-            //Reflux.listenTo(TagsStore, 'onTagsChanged'),
+            Reflux.connect(ValidationStore, 'validation'),
+            Reflux.listenTo(TagsStore, 'onTagsChanged'),
             Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
             Reflux.connect(DataStore),
             Reflux.connect(PhraseStore),
@@ -93,9 +96,9 @@ var DropdownTagsCreator = function (config) {
             return this.props.field.maxTags <= this.state.tags.length;
         },
 
-        /*onTagsChanged: function (tags) {
+        onTagsChanged: function (tags) {
             ValidationActions.validate(this.props.field, tags);
-        },*/
+        },
 
         getFieldActions: function () {
             return {

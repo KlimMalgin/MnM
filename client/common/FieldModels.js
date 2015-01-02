@@ -17,7 +17,12 @@ var FieldModels = {
         name: 'tags',
         type: 'text',
         label: 'Категории',
-        placeholder: 'Категории транзакции'
+        placeholder: 'Категории транзакции',
+        validators: {
+            sync: ap([
+                Validators.required
+            ])
+        }
     },
     Description : {
         name: 'description',
