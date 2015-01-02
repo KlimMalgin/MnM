@@ -18,6 +18,11 @@ var FieldModels = {
         type: 'text',
         label: 'Категории',
         placeholder: 'Категории транзакции',
+        message: {
+            text: '',
+            behavior: 'none',
+            type: 'info'
+        },
         validators: {
             sync: ap([
                 Validators.requiredArray

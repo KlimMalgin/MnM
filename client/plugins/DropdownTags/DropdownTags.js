@@ -10,6 +10,8 @@ var React = require('react'),
     merge = require('react/lib/merge');
 
 var DocumentListenerMixin = require('../../mixins/DropdownTags/DocumentListenerMixin');
+var FieldMixin = require('../../mixins/FieldMixin');
+var ValidationMixin = require('../../mixins/ValidationMixin');
 
 var DropdownTagsField = require('./DropdownTagsField');
 
@@ -39,9 +41,12 @@ var DropdownTagsCreator = function (config) {
 
         mixins: [
             ListenerMixin,
+            FieldMixin,
+            ValidationMixin,
             Reflux.connect(FocusedStore, 'focused'),
             Reflux.connect(TagsStore, 'tags'),
             Reflux.connect(ValidationStore, 'validation'),
+            Reflux.listenTo(ValidationStore, 'onValidationChange'),
             Reflux.listenTo(TagsStore, 'onTagsChanged'),
             Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
             Reflux.connect(DataStore),
@@ -50,20 +55,20 @@ var DropdownTagsCreator = function (config) {
             DocumentListenerMixin
         ],
 
-        getDefaultProps: function () {
+        /*getDefaultProps: function () {
             return {
                 field: {
                     maxTags: 3,
                     placeholder: 'place',
                     message: {
-                        text: 'service message',
+                        text: '',
                         behavior: 'none', // none|focus|static
                         type: 'info'      // info|error
                     }
                 },
                 dataStore: null
             };
-        },
+        },*/
 
         getInitialState: function () {
             return {
@@ -97,7 +102,17 @@ var DropdownTagsCreator = function (config) {
         },
 
         onTagsChanged: function (tags) {
-            ValidationActions.validate(this.props.field, tags);
+            ValidationActions.validate(this.model(), tags);
+        },
+
+        onValidationChange: function() {
+            this.setState({
+                message: merge(this.state.message, {
+                    text: this.isInvalid() ? this.validation().messages : this.props.field.message.text,
+                    type: this.isInvalid() ? 'error' : this.props.field.message.type,
+                    behavior: this.isInvalid() ? 'static' : this.props.field.message.behavior
+                })
+            });
         },
 
         getFieldActions: function () {
