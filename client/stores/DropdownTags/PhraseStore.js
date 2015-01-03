@@ -40,8 +40,8 @@ var PhraseStoreCreator = function (config) {
             var result = "";
             if (focusValue >= 0) {
                 result = "";
-            } else {
-                result = citiesValue[focusValue][DisplayField].substr(phraseValue.length);
+            } else if (focusValue === -1) {
+                result = citiesValue[0][DisplayField].substr(phraseValue.length);
             }
 
             context.composed.hint = Option.from(result);
@@ -61,7 +61,7 @@ var PhraseStoreCreator = function (config) {
 
             if (focusValue >= 0) {
                 result = citiesValue[focusValue][DisplayField];
-            } else {
+            } else if (focusValue === -1) {
                 result = phraseValue;
             }
 
@@ -130,7 +130,7 @@ var PhraseStoreCreator = function (config) {
                  * выбранный для завершения введенной фразы
                  */
                 focusValue   = this._focused.chain(function (val) {
-                    return val <= 0 ? 0 : val;
+                    return val;// <= 0 ? 0 : val;
                 });
 
             _IfCitiesNotEmpty(citiesOption).chain(function (citiesValue) {
@@ -155,7 +155,7 @@ var PhraseStoreCreator = function (config) {
                  * выбранный для завершения введенной фразы
                  */
                 focusValue = this._focused.chain(function (val) {
-                    return val <= 0 ? 0 : val;
+                    return val;// <= 0 ? 0 : val;
                 });
 
             _IfCitiesNotEmpty(citiesOption)
