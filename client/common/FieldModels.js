@@ -16,10 +16,10 @@ var FieldModels = {
     Tags : {
         name: 'tags',
         type: 'text',
-        label: 'Категории',
+        label: '',
         placeholder: 'Категории транзакции',
         message: {
-            text: '',
+            text: 'Выберите категории и теги, либо введите свои',
             behavior: 'none',
             type: 'info'
         },

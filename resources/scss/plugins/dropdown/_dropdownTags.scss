@@ -15,6 +15,7 @@
 }
 
 .dropdown-tags-field {
+  @include relative;
 
   .dropdown-tags-input {
     opacity:0;
@@ -30,8 +31,7 @@
   }
 
   &.form-control {
-    padding: 6px 12px 6px 7px;
-    min-height: 42px;
+    padding: 5px 12px 4px 7px;
     height: auto;
     z-index: 9;
   }
@@ -51,7 +51,7 @@
     @include relative(-1px);
     background-color: $default-color;
     margin-right: 4px;
-    font-size: 17px;
+    font-size: 15px;
     padding: 0 7px 2px 7px;
     white-space: nowrap;
     display: inline-block;
