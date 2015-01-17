@@ -29,6 +29,22 @@ var FieldModels = {
             ])
         }
     },
+    CustomCombo : {
+        name: 'combo',
+        type: 'text',
+        label: '',
+        placeholder: 'Второй комбобокс',
+        message: {
+            text: 'Это просто подсказка',
+            behavior: 'none',
+            type: 'info'
+        },
+        validators: {
+            sync: ap([
+                Validators.requiredArray
+            ])
+        }
+    },
     Description : {
         name: 'description',
         type: 'textarea',
