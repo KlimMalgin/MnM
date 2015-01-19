@@ -30,8 +30,18 @@ var TagsStore = require('../../stores/DropdownTags/TagsStore');
 var MessagePlugin = require('./plugin/Message');
 var LabelPlugin = require('./plugin/Label');
 
+var randomizer = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 var DropdownTagsCreator = function (config) {
+    var UID = [
+        randomizer(1000, 9999).toString(),
+        randomizer(1000, 9999).toString(),
+        randomizer(1000, 9999).toString(),
+        randomizer(1000, 9999).toString()
+    ].join('-');
+
     var DataStore = config.DataStoreCreator(config);
     var PhraseStore = PhraseStoreCreator(config);
     var ComboBoxList = config.ItemsListCreator(config);
