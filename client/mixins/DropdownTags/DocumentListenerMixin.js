@@ -13,21 +13,12 @@ var DocumentListenerMixin = {
             function () {
                 console.info("handleDocumentClick не реализован. %o", arguments);
             });
-        /*this._onDocumentKeyupListener =
-            EventListener.listen(document, 'keyup', this.handleDocumentKeyUp ||
-            function () {
-                console.info("handleDocumentKeyUp не реализован. %o", arguments);
-            });*/
     },
 
     componentWillUnmount: function () {
         if (this._onDocumentClickListener) {
             this._onDocumentClickListener.remove();
         }
-
-        /*if (this._onDocumentKeyupListener) {
-            this._onDocumentKeyupListener.remove();
-        }*/
     }
 
 };

@@ -41,13 +41,14 @@ var TransactionForm = React.createClass({
     },
 
     render: function () {
-        var ComboBox = this.renderComboBox();
+        var ComboBox1 = this.renderComboBox()(),
+            ComboBox2 = this.renderComboBox()();
 
         return (
             <div className="transaction-form">
                 <form>
-                    <ComboBox field={this.formModel().tags} />
-                    <ComboBox field={this.formModel().custom} />
+                    <ComboBox1 field={this.formModel().tags} />
+                    <ComboBox2 field={this.formModel().custom} />
                     <Input type="text" placeholder="Сумма" />
                     <Input type="textarea" placeholder="Описание" />
 

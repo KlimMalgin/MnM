@@ -7,7 +7,7 @@ var Reflux = require('reflux');
 
 var DropdownActionsCreator = function(config) {
 
-    return Reflux.createActions.createActions([
+    var Actions = Reflux.createActions.createActions([
         'changePhrase',
 
         'addTags',
@@ -28,6 +28,16 @@ var DropdownActionsCreator = function(config) {
         return item + config.uid;
     }));
 
+    for (var key in Actions) {
+        if (!Actions.hasOwnProperty(key)) continue;
+        Actions[key].preEmit = (function(k) {
+            return function () {
+                console.info('Key: %o', k);
+            };
+        })(key);
+    }
+
+    return Actions;
 };
 
 module.exports = DropdownActionsCreator;

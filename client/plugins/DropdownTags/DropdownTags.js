@@ -35,184 +35,193 @@ var randomizer = function(min, max) {
 };
 
 var DropdownTagsCreator = function (config) {
-    var UID = [
-        randomizer(1000, 9999).toString(),
-        randomizer(1000, 9999).toString(),
-        randomizer(1000, 9999).toString(),
-        randomizer(1000, 9999).toString()
-    ].join('-');
 
-    console.info('UID: %o', UID);
+    return function() {
+        var UID = [
+            randomizer(1000, 9999).toString(),
+            randomizer(1000, 9999).toString(),
+            randomizer(1000, 9999).toString(),
+            randomizer(1000, 9999).toString()
+        ].join('-');
 
-    config.uid = UID;
-    config.ComboBoxItemsActions = config.Actions(config);
-    config.DropdownActions = DropdownActions(config);
-    config.FieldFocusStore = FieldFocusStoreCreator(config);
-    config.FocusedStore = FocusedStoreCreator(config);
-    config.TagsStore = TagsStoreCreator(config);
+        console.info('UID: %o', UID);
 
-    config.DataStore = config.DataStoreCreator(config);
-    config.PhraseStore = PhraseStoreCreator(config);
+        config.uid = UID;
+        config.ComboBoxItemsActions = config.Actions(config);
+        config.DropdownActions = DropdownActions(config);
+        config.FieldFocusStore = FieldFocusStoreCreator(config);
+        config.FocusedStore = FocusedStoreCreator(config);
+        config.TagsStore = TagsStoreCreator(config);
 
-    //var FieldFocusStore = config.FieldFocusStore;
-    //var FocusedStore = config.FocusedStore;
-    //var DataStore = config.DataStoreCreator(config);
-    //var PhraseStore = PhraseStoreCreator(config);
+        config.DataStore = config.DataStoreCreator(config);
+        config.PhraseStore = PhraseStoreCreator(config);
 
-    var ComboBoxField = DropdownTagsField(config);
-    var ComboBoxList = config.ItemsListCreator(config);
+        //var FieldFocusStore = config.FieldFocusStore;
+        //var FocusedStore = config.FocusedStore;
+        //var DataStore = config.DataStoreCreator(config);
+        //var PhraseStore = PhraseStoreCreator(config);
 
-    var FullTextSearch = config.FullTextSearch || false;
+        var ComboBoxField = DropdownTagsField(config);
+        var ComboBoxList = config.ItemsListCreator(config);
 
-    return React.createClass({
+        var FullTextSearch = config.FullTextSearch || false;
 
-        mixins: [
-            ListenerMixin,
-            FieldMixin,
-            ValidationMixin,
-            Reflux.connect(config.FocusedStore, 'focused'),
-            Reflux.connect(config.TagsStore, 'tags'),
-            Reflux.connect(ValidationStore, 'validation'),
-            Reflux.listenTo(ValidationStore, 'onValidationChange'),
-            Reflux.listenTo(config.TagsStore, 'onTagsChanged'),
-            Reflux.listenTo(config.FieldFocusStore, 'onFieldFocusChanged'),
-            Reflux.connect(config.DataStore),
-            Reflux.connect(config.PhraseStore),
-            Reflux.connect(config.FieldFocusStore, 'fieldFocus'),
-            DocumentListenerMixin
-        ],
 
-        getInitialState: function () {
-            return {
-                items: Option.from([]),
-                message: {
-                    visible: false
-                }
-            };
-        },
 
-        handleDocumentClick: function (e) {
-            if (isDropdown(e.target, 1, 6)) {
-                config.DropdownActions['enableFieldFocus' + config.uid]();
-            } else {
-                config.DropdownActions['disableFieldFocus' + config.uid]();
-            }
+        return React.createClass({
 
-            /**
-             * Пройдет по DOM дереву вверх, проверяя классы у el
-             */
-            function isDropdown(el, iter, stop) {
-                iter = iter || 1;
-                return el.classList && el.classList.contains("dropdown-tags") ? true :
-                    iter < stop && !!el.parentNode ?
-                        isDropdown(el.parentNode, ++iter, stop) : false;
-            }
-        },
+            mixins: [
+                ListenerMixin,
+                FieldMixin,
+                ValidationMixin,
+                Reflux.connect(config.FocusedStore, 'focused'),
+                Reflux.connect(config.TagsStore, 'tags'),
+                Reflux.connect(ValidationStore, 'validation'),
+                Reflux.listenTo(ValidationStore, 'onValidationChange'),
+                Reflux.listenTo(config.TagsStore, 'onTagsChanged'),
+                Reflux.listenTo(config.FieldFocusStore, 'onFieldFocusChanged'),
+                Reflux.connect(config.DataStore),
+                Reflux.connect(config.PhraseStore),
+                Reflux.connect(config.FieldFocusStore, 'fieldFocus'),
+                DocumentListenerMixin
+            ],
 
-        isDisabledDropdown: function () {
-            return this.props.field.maxTags <= this.state.tags.length;
-        },
+            cmCfg: config,
 
-        onTagsChanged: function (tags) {
-            ValidationActions.validate(this.model(), tags);
-        },
-
-        onValidationChange: function() {
-            this.setState({
-                message: merge(this.state.message, {
-                    text: this.isInvalid() ? this.validation().messages : this.props.field.message.text,
-                    type: this.isInvalid() ? 'error' : this.props.field.message.type,
-                    behavior: this.isInvalid() ? 'static' : this.props.field.message.behavior
-                })
-            });
-        },
-
-        getFieldActions: function () {
-            return {
-                addTags: config.DropdownActions['addTags' + config.uid],
-                removeLastTag: config.DropdownActions['removeLastTag' + config.uid],
-                removeTag: config.DropdownActions['removeTag' + config.uid],
-                nextFocused: config.DropdownActions['nextFocused' + config.uid],
-                prevFocused: config.DropdownActions['prevFocused' + config.uid],
-                clearFocused: config.DropdownActions['clearFocus' + config.uid],
-                completePhrase: config.DropdownActions['completePhrase' + config.uid],
-                disableFieldFocus: config.DropdownActions['disableFieldFocus' + config.uid]
-            };
-        },
-
-        getListActions: function () {
-            return {
-                addTags: function (itemName) {
-                    config.DropdownActions['addTags' + config.uid](itemName);
-                    config.DropdownActions['clearFocus' + config.uid]();
-                    config.DropdownActions['changePhrase' + config.uid](Option.from(""));
-                }
-            };
-        },
-
-        componentWillUpdate: function (nextProps, nextState) {
-            if (nextProps.field.maxTags <= nextState.tags.length) {
-                nextState.phrase.chain(function (v) {
-                    v.length && config.DropdownActions['changePhrase' + config.uid](Option.from(""));
-                });
-            }
-        },
-
-        onFieldFocusChanged: function (fieldFocus) {
-            this.setState({
-                message: merge(this.props.field.message, {
-                    visible: fieldFocus
-                })
-            });
-        },
-
-        handleFocusField: function () {
-            if (!this.state.fieldFocus) {
-                config.DropdownActions['enableFieldFocus' + config.uid]();
-            }
-        },
-
-        render: function () {
-            var stateLinker = {
-                    value: '',
-                    requestChange: function (valueOption) {
-                        config.DropdownActions['changePhrase' + config.uid](valueOption);
+            getInitialState: function () {
+                return {
+                    items: Option.from([]),
+                    message: {
+                        visible: false
                     }
-                },
-                pluginState = {
-                    arrow: !!this.state.items.getOrElse([]).length
                 };
+            },
 
-            return (
-                <div className="dropdown-tags form-group">
+            handleDocumentClick: function (e) {
+                if (isDropdown(e.target, 1, 6)) {
+                    config.DropdownActions['enableFieldFocus' + config.uid]();
+                } else {
+                    config.DropdownActions['disableFieldFocus' + config.uid]();
+                }
+
+                /**
+                 * Пройдет по DOM дереву вверх, проверяя классы у el
+                 */
+                function isDropdown(el, iter, stop) {
+                    iter = iter || 1;
+                    return el.classList && el.classList.contains("dropdown-tags") ? true :
+                        iter < stop && !!el.parentNode ?
+                            isDropdown(el.parentNode, ++iter, stop) : false;
+                }
+            },
+
+            isDisabledDropdown: function () {
+                return this.props.field.maxTags <= this.state.tags.length;
+            },
+
+            onTagsChanged: function (tags) {
+                ValidationActions.validate(this.model(), tags);
+            },
+
+            onValidationChange: function() {
+                this.setState({
+                    message: merge(this.state.message, {
+                        text: this.isInvalid() ? this.validation().messages : this.props.field.message.text,
+                        type: this.isInvalid() ? 'error' : this.props.field.message.type,
+                        behavior: this.isInvalid() ? 'static' : this.props.field.message.behavior
+                    })
+                });
+            },
+
+            getFieldActions: function () {
+                return {
+                    addTags: config.DropdownActions['addTags' + config.uid],
+                    removeLastTag: config.DropdownActions['removeLastTag' + config.uid],
+                    removeTag: config.DropdownActions['removeTag' + config.uid],
+                    nextFocused: config.DropdownActions['nextFocused' + config.uid],
+                    prevFocused: config.DropdownActions['prevFocused' + config.uid],
+                    clearFocused: config.DropdownActions['clearFocus' + config.uid],
+                    completePhrase: config.DropdownActions['completePhrase' + config.uid],
+                    disableFieldFocus: config.DropdownActions['disableFieldFocus' + config.uid]
+                };
+            },
+
+            getListActions: function () {
+                return {
+                    addTags: function (itemName) {
+                        config.DropdownActions['addTags' + config.uid](itemName);
+                        config.DropdownActions['clearFocus' + config.uid]();
+                        config.DropdownActions['changePhrase' + config.uid](Option.from(""));
+                    }
+                };
+            },
+
+            componentWillUpdate: function (nextProps, nextState) {
+                if (nextProps.field.maxTags <= nextState.tags.length) {
+                    nextState.phrase.chain(function (v) {
+                        v.length && config.DropdownActions['changePhrase' + config.uid](Option.from(""));
+                    });
+                }
+            },
+
+            onFieldFocusChanged: function (fieldFocus) {
+                this.setState({
+                    message: merge(this.props.field.message, {
+                        visible: fieldFocus
+                    })
+                });
+            },
+
+            handleFocusField: function () {
+                if (!this.state.fieldFocus) {
+                    config.DropdownActions['enableFieldFocus' + config.uid]();
+                }
+            },
+
+            render: function () {
+                var stateLinker = {
+                        value: '',
+                        requestChange: function (valueOption) {
+                            config.DropdownActions['changePhrase' + config.uid](valueOption);
+                        }
+                    },
+                    pluginState = {
+                        arrow: !!this.state.items.getOrElse([]).length
+                    };
+
+                return (
+                    <div className="dropdown-tags form-group">
                 {MessagePlugin(this.state.message)}
-                    <LabelPlugin>{this.props.field.label}</LabelPlugin>
-                    <ComboBoxField
-                        className="form-control"
-                        tags={this.state.tags}
-                        hint={FullTextSearch ? Option.of("") : this.state.hint}
-                        phrase={this.state.phrase}
-                        focused={this.state.focused}
-                        focusInput={this.state.message.visible}
-                        fieldFocus={this.state.fieldFocus}
-                        disable={this.isDisabledDropdown()}
-                        valueLink={stateLinker}
-                        actions={this.getFieldActions()}
-                        plugins={pluginState}
-                        placeholder={this.props.field.placeholder}
-                        onFocus={this.handleFocusField}
-                    />
-                    <ComboBoxList
-                        list={this.state.items}
-                        phrase={this.state.phrase}
-                        focused={this.state.focused}
-                        fieldFocus={this.state.fieldFocus}
-                        actions={this.getListActions()}
-                    />
-                </div>
-            );
-        }
-    });
+                        <LabelPlugin>{this.props.field.label}</LabelPlugin>
+                        <ComboBoxField
+                            className="form-control"
+                            tags={this.state.tags}
+                            hint={FullTextSearch ? Option.of("") : this.state.hint}
+                            phrase={this.state.phrase}
+                            focused={this.state.focused}
+                            focusInput={this.state.message.visible}
+                            fieldFocus={this.state.fieldFocus}
+                            disable={this.isDisabledDropdown()}
+                            valueLink={stateLinker}
+                            actions={this.getFieldActions()}
+                            plugins={pluginState}
+                            placeholder={this.props.field.placeholder}
+                            onFocus={this.handleFocusField}
+                        />
+                        <ComboBoxList
+                            list={this.state.items}
+                            phrase={this.state.phrase}
+                            focused={this.state.focused}
+                            fieldFocus={this.state.fieldFocus}
+                            actions={this.getListActions()}
+                        />
+                    </div>
+                );
+            }
+        });
+
+    };
+
 };
 
 module.exports = DropdownTagsCreator;

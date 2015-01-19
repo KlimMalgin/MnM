@@ -41,32 +41,38 @@ var Reflux = require('reflux');
 
 var FieldFocusStoreCreator = function (config) {
 
-    return Reflux.createStore({
+    console.info('\n===\nFieldFocusStoreCreator: %o \n===\n', config.uid);
 
-        init: function () {
-            this.fieldFocus = false;
+    return new (function() {
 
-            this.listenTo(config.DropdownActions['enableFieldFocus' + config.uid], this.handleEnableFieldFocus);
-            this.listenTo(config.DropdownActions['disableFieldFocus' + config.uid], this.handleDisableFieldFocus);
-        },
+        return Reflux.createStore({
 
-        getDefaultData: function() {
-            return this.fieldFocus;
-        },
+            init: function () {
+                this.fieldFocus = false;
 
-        update : function(focus) {
-            this.trigger(this.fieldFocus = focus);
-        },
+                this.listenTo(config.DropdownActions['enableFieldFocus' + config.uid], this.handleEnableFieldFocus);
+                this.listenTo(config.DropdownActions['disableFieldFocus' + config.uid], this.handleDisableFieldFocus);
+            },
 
-        handleEnableFieldFocus: function () {
-            this.update(true);
-        },
+            getDefaultData: function() {
+                return this.fieldFocus;
+            },
 
-        handleDisableFieldFocus: function () {
-            this.update(false);
-        }
+            update : function(focus) {
+                this.trigger(this.fieldFocus = focus);
+            },
 
-    });
+            handleEnableFieldFocus: function () {
+                this.update(true);
+            },
+
+            handleDisableFieldFocus: function () {
+                this.update(false);
+            }
+
+        });
+
+    })();
 
 };
 
