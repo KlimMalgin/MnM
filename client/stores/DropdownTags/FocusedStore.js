@@ -6,7 +6,7 @@
 var Option = require('fantasy-options').Option;
 
 var Reflux = require('reflux');
-var DropdownActions = require('../../actions/DropdownActions');
+//var DropdownActions = require('../../actions/DropdownActions');
 
 var _lengthGetter = function (itemsValue) {
     var ln = itemsValue && itemsValue.length;
@@ -25,49 +25,55 @@ var _decrementFocus = function (focusedValue, citiesCountValue) {
  * Хранилище. При обновлении значения бросает событие изменения
  *
  */
-var FocusedItemStore = Reflux.createStore({
 
-    init: function () {
-        this.focused = Option.from(-1);
-        this.citiesCount = 0;
+var FocusedItemStoreCreator = function (config) {
+    var uid = config.uid;
 
-        this.listenTo(DropdownActions.nextFocused, this.handleFocusedNext);
-        this.listenTo(DropdownActions.prevFocused, this.handleFocusedPrev);
-        this.listenTo(DropdownActions.clearFocus,  this.handleFocusClear);
-        this.listenTo(DropdownActions.updateItems, this.handleReceiveCities);
+    return Reflux.createStore({
 
-        this.listenTo(DropdownActions.changePhrase, this.handleFocusClear);
-    },
+        init: function () {
+            this.focused = Option.from(-1);
+            this.citiesCount = 0;
 
-    getDefaultData: function() {
-        return this.focused;
-    },
+            this.listenTo(config.DropdownActions['nextFocused' + uid], this.handleFocusedNext);
+            this.listenTo(config.DropdownActions['prevFocused' + uid], this.handleFocusedPrev);
+            this.listenTo(config.DropdownActions['clearFocus' + uid],  this.handleFocusClear);
+            this.listenTo(config.DropdownActions['updateItems' + uid], this.handleReceiveCities);
 
-    update : function() {
-        this.trigger(this.focused);
-    },
+            this.listenTo(config.DropdownActions['changePhrase' + uid], this.handleFocusClear);
+        },
 
-    handleFocusedNext: function () {
-        var focused = this.focused.getOrElse(-1);
-        this.focused = _incrementFocus(focused, this.citiesCount);
-        this.update();
-    },
+        getDefaultData: function() {
+            return this.focused;
+        },
 
-    handleFocusedPrev: function () {
-        var focused = this.focused.getOrElse(-1);
-        this.focused = _decrementFocus(focused, this.citiesCount);
-        this.update();
-    },
+        update : function() {
+            this.trigger(this.focused);
+        },
 
-    handleFocusClear: function () {
-        this.focused = Option.from(-1);
-        this.update();
-    },
+        handleFocusedNext: function () {
+            var focused = this.focused.getOrElse(-1);
+            this.focused = _incrementFocus(focused, this.citiesCount);
+            this.update();
+        },
 
-    handleReceiveCities: function (itemsOption) {
-        this.citiesCount = itemsOption.chain(_lengthGetter);
-    }
+        handleFocusedPrev: function () {
+            var focused = this.focused.getOrElse(-1);
+            this.focused = _decrementFocus(focused, this.citiesCount);
+            this.update();
+        },
 
-});
+        handleFocusClear: function () {
+            this.focused = Option.from(-1);
+            this.update();
+        },
 
-module.exports = FocusedItemStore;
+        handleReceiveCities: function (itemsOption) {
+            this.citiesCount = itemsOption.chain(_lengthGetter);
+        }
+
+    });
+};
+
+
+module.exports = FocusedItemStoreCreator;

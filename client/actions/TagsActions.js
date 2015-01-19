@@ -12,7 +12,8 @@ var store = require('store');
 
 
 var ComboBoxActionsCreator = function (config) {
-    var FullTextSearch = config.FullTextSearch || false;
+    var FullTextSearch = config.FullTextSearch || false,
+        uid = config.uid;
 
     var loadItemsDef = {
         preEmit : function(phrase) {
@@ -29,14 +30,14 @@ var ComboBoxActionsCreator = function (config) {
                                 phrase: phraseValue,
                                 fullTextSearch: FullTextSearch
                             }
-                        }).done(ActionsObject.receiveComboBoxItems);
+                        }).done(ActionsObject['receiveComboBoxItems' + uid]);
                     }, function () {
                         // TODO: У Action-сущностей есть метод handler?
-                        ActionsObject.receiveComboBoxItems({result:[]});
+                        ActionsObject['receiveComboBoxItems' + uid]({result:[]});
                     });
                 },
                 function () {
-                    ActionsObject.receiveComboBoxItems({result:[]});
+                    ActionsObject['receiveComboBoxItems' + uid]({result:[]});
                 }
             );
 
@@ -49,11 +50,14 @@ var ComboBoxActionsCreator = function (config) {
         }
     };
 
-    var ActionsObject = {
-        loadComboBoxItems : Reflux.createAction(loadItemsDef),
+    var ActionsObject = {};
+        /*loadComboBoxItems : Reflux.createAction(loadItemsDef),
 
         receiveComboBoxItems : Reflux.createAction(receiveItemsDef)
-    };
+    };*/
+
+    ActionsObject['loadComboBoxItems' + uid] = Reflux.createAction(loadItemsDef);
+    ActionsObject['receiveComboBoxItems' + uid] = Reflux.createAction(receiveItemsDef);
 
     return ActionsObject;
 };

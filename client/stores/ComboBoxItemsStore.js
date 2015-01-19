@@ -8,10 +8,11 @@ var Option = require('fantasy-options').Option;
 var Reflux = require('reflux');
 var merge = require('react/lib/merge');
 
-var DropdownActions = require('../actions/DropdownActions');
+//var DropdownActions = require('../actions/DropdownActions');
 
 var ComboBoxItemsStoreCreator = function (config) {
-    var Actions = config.Actions(config);
+    var Actions = config.ComboBoxItemsActions,
+        uid = config.uid;
 
     return Reflux.createStore({
         init: function () {
@@ -19,10 +20,10 @@ var ComboBoxItemsStoreCreator = function (config) {
                 items: Option.of([])
             };
 
-            this.listenTo(DropdownActions.changePhrase, this.handleChangePhrase);
-            this.listenTo(Actions.receiveComboBoxItems, this.handleReceiveItems);
+            this.listenTo(config.DropdownActions['changePhrase' + uid], this.handleChangePhrase);
+            this.listenTo(Actions['receiveComboBoxItems' + uid], this.handleReceiveItems);
 
-            Actions.loadComboBoxItems(Option.from(""));
+            Actions['loadComboBoxItems' + uid](Option.from(""));
         },
 
         getDefaultData: function() {
@@ -32,12 +33,12 @@ var ComboBoxItemsStoreCreator = function (config) {
         update : function(compose) {
             this.compose = compose;
             // TODO: При наличии нескольких контролов на странице, все они будут реагировать на это событие. Нужно продумать разделение реакции, чтобы каждый реагировал только на свое событие
-            DropdownActions.updateItems(this.compose.items);
+            config.DropdownActions['updateItems' + uid](this.compose.items);
             this.trigger(this.compose);
         },
 
         handleChangePhrase: function (phrase) {
-            Actions.loadComboBoxItems(phrase);
+            Actions['loadComboBoxItems' + uid](phrase);
         },
 
         handleReceiveItems: function(data) {

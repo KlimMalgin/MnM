@@ -9,12 +9,9 @@ var Reflux = require('reflux');
 var merge = require('react/lib/merge');
 var curry = require('core.lambda').curry;
 
-var DropdownActions = require('../../actions/DropdownActions');
-
-var FocusedStore = require('./FocusedStore');
-
 var PhraseStoreCreator = function (config) {
-    var DisplayField = config.DisplayProperty || "name";
+    var DisplayField = config.DisplayProperty || "name",
+        uid = config.uid;
 
     var _updater = function (context, cities, phrase) {
         context.composed = {
@@ -80,11 +77,11 @@ var PhraseStoreCreator = function (config) {
 
             this._focused = Option.from(-1);
 
-            this.listenTo(DropdownActions.updateItems, this.updateDataItems);
-            this.listenTo(DropdownActions.changePhrase, this.handleChangePhrase);
-            this.listenTo(DropdownActions.completePhrase, this.handleCompletePhrase);
+            this.listenTo(config.DropdownActions['updateItems' + uid], this.updateDataItems);
+            this.listenTo(config.DropdownActions['changePhrase' + uid], this.handleChangePhrase);
+            this.listenTo(config.DropdownActions['completePhrase' + uid], this.handleCompletePhrase);
 
-            this.listenTo(FocusedStore, this.handleChangeFocus);
+            this.listenTo(config.FocusedStore, this.handleChangeFocus);
 
             this.calcPhrase = _phraseCreator(this);
             this.calcHint = _hintCreator(this);
@@ -113,7 +110,7 @@ var PhraseStoreCreator = function (config) {
         handleCompletePhrase: function () {
             this.emptyHint();
             if (this._focused.getOrElse(-1) === -1) {
-                DropdownActions.nextFocused();
+                config.DropdownActions['nextFocused' + uid]();
             }
             this.update();
         },
@@ -172,6 +169,7 @@ var PhraseStoreCreator = function (config) {
         }
 
     });
+
 };
 
 module.exports = PhraseStoreCreator;

@@ -23,9 +23,9 @@ var ValidationActions = require('../../actions/ValidationActions');
 
 var ValidationStore = require('../../stores/ValidationStore');
 var PhraseStoreCreator = require('../../stores/DropdownTags/PhraseStore');
-var FocusedStore = require('../../stores/DropdownTags/FocusedStore');
-var FieldFocusStore = require('../../stores/DropdownTags/FieldFocusStore');
-var TagsStore = require('../../stores/DropdownTags/TagsStore');
+var FocusedStoreCreator = require('../../stores/DropdownTags/FocusedStore');
+var FieldFocusStoreCreator = require('../../stores/DropdownTags/FieldFocusStore');
+var TagsStoreCreator = require('../../stores/DropdownTags/TagsStore');
 
 var MessagePlugin = require('./plugin/Message');
 var LabelPlugin = require('./plugin/Label');
@@ -42,9 +42,26 @@ var DropdownTagsCreator = function (config) {
         randomizer(1000, 9999).toString()
     ].join('-');
 
-    var DataStore = config.DataStoreCreator(config);
-    var PhraseStore = PhraseStoreCreator(config);
+    console.info('UID: %o', UID);
+
+    config.uid = UID;
+    config.ComboBoxItemsActions = config.Actions(config);
+    config.DropdownActions = DropdownActions(config);
+    config.FieldFocusStore = FieldFocusStoreCreator(config);
+    config.FocusedStore = FocusedStoreCreator(config);
+    config.TagsStore = TagsStoreCreator(config);
+
+    config.DataStore = config.DataStoreCreator(config);
+    config.PhraseStore = PhraseStoreCreator(config);
+
+    //var FieldFocusStore = config.FieldFocusStore;
+    //var FocusedStore = config.FocusedStore;
+    //var DataStore = config.DataStoreCreator(config);
+    //var PhraseStore = PhraseStoreCreator(config);
+
+    var ComboBoxField = DropdownTagsField(config);
     var ComboBoxList = config.ItemsListCreator(config);
+
     var FullTextSearch = config.FullTextSearch || false;
 
     return React.createClass({
@@ -53,32 +70,17 @@ var DropdownTagsCreator = function (config) {
             ListenerMixin,
             FieldMixin,
             ValidationMixin,
-            Reflux.connect(FocusedStore, 'focused'),
-            Reflux.connect(TagsStore, 'tags'),
+            Reflux.connect(config.FocusedStore, 'focused'),
+            Reflux.connect(config.TagsStore, 'tags'),
             Reflux.connect(ValidationStore, 'validation'),
             Reflux.listenTo(ValidationStore, 'onValidationChange'),
-            Reflux.listenTo(TagsStore, 'onTagsChanged'),
-            Reflux.listenTo(FieldFocusStore, 'onFieldFocusChanged'),
-            Reflux.connect(DataStore),
-            Reflux.connect(PhraseStore),
-            Reflux.connect(FieldFocusStore, 'fieldFocus'),
+            Reflux.listenTo(config.TagsStore, 'onTagsChanged'),
+            Reflux.listenTo(config.FieldFocusStore, 'onFieldFocusChanged'),
+            Reflux.connect(config.DataStore),
+            Reflux.connect(config.PhraseStore),
+            Reflux.connect(config.FieldFocusStore, 'fieldFocus'),
             DocumentListenerMixin
         ],
-
-        /*getDefaultProps: function () {
-            return {
-                field: {
-                    maxTags: 3,
-                    placeholder: 'place',
-                    message: {
-                        text: '',
-                        behavior: 'none', // none|focus|static
-                        type: 'info'      // info|error
-                    }
-                },
-                dataStore: null
-            };
-        },*/
 
         getInitialState: function () {
             return {
@@ -91,9 +93,9 @@ var DropdownTagsCreator = function (config) {
 
         handleDocumentClick: function (e) {
             if (isDropdown(e.target, 1, 6)) {
-                DropdownActions.enableFieldFocus();
+                config.DropdownActions['enableFieldFocus' + config.uid]();
             } else {
-                DropdownActions.disableFieldFocus();
+                config.DropdownActions['disableFieldFocus' + config.uid]();
             }
 
             /**
@@ -127,23 +129,23 @@ var DropdownTagsCreator = function (config) {
 
         getFieldActions: function () {
             return {
-                addTags: DropdownActions.addTags,
-                removeLastTag: DropdownActions.removeLastTag,
-                removeTag: DropdownActions.removeTag,
-                nextFocused: DropdownActions.nextFocused,
-                prevFocused: DropdownActions.prevFocused,
-                clearFocused: DropdownActions.clearFocus,
-                completePhrase: DropdownActions.completePhrase,
-                disableFieldFocus: DropdownActions.disableFieldFocus
+                addTags: config.DropdownActions['addTags' + config.uid],
+                removeLastTag: config.DropdownActions['removeLastTag' + config.uid],
+                removeTag: config.DropdownActions['removeTag' + config.uid],
+                nextFocused: config.DropdownActions['nextFocused' + config.uid],
+                prevFocused: config.DropdownActions['prevFocused' + config.uid],
+                clearFocused: config.DropdownActions['clearFocus' + config.uid],
+                completePhrase: config.DropdownActions['completePhrase' + config.uid],
+                disableFieldFocus: config.DropdownActions['disableFieldFocus' + config.uid]
             };
         },
 
         getListActions: function () {
             return {
                 addTags: function (itemName) {
-                    DropdownActions.addTags(itemName);
-                    DropdownActions.clearFocus();
-                    DropdownActions.changePhrase(Option.from(""));
+                    config.DropdownActions['addTags' + config.uid](itemName);
+                    config.DropdownActions['clearFocus' + config.uid]();
+                    config.DropdownActions['changePhrase' + config.uid](Option.from(""));
                 }
             };
         },
@@ -151,7 +153,7 @@ var DropdownTagsCreator = function (config) {
         componentWillUpdate: function (nextProps, nextState) {
             if (nextProps.field.maxTags <= nextState.tags.length) {
                 nextState.phrase.chain(function (v) {
-                    v.length && DropdownActions.changePhrase(Option.from(""));
+                    v.length && config.DropdownActions['changePhrase' + config.uid](Option.from(""));
                 });
             }
         },
@@ -166,7 +168,7 @@ var DropdownTagsCreator = function (config) {
 
         handleFocusField: function () {
             if (!this.state.fieldFocus) {
-                DropdownActions.enableFieldFocus();
+                config.DropdownActions['enableFieldFocus' + config.uid]();
             }
         },
 
@@ -174,7 +176,7 @@ var DropdownTagsCreator = function (config) {
             var stateLinker = {
                     value: '',
                     requestChange: function (valueOption) {
-                        DropdownActions.changePhrase(valueOption);
+                        config.DropdownActions['changePhrase' + config.uid](valueOption);
                     }
                 },
                 pluginState = {
@@ -185,7 +187,7 @@ var DropdownTagsCreator = function (config) {
                 <div className="dropdown-tags form-group">
                 {MessagePlugin(this.state.message)}
                     <LabelPlugin>{this.props.field.label}</LabelPlugin>
-                    <DropdownTagsField
+                    <ComboBoxField
                         className="form-control"
                         tags={this.state.tags}
                         hint={FullTextSearch ? Option.of("") : this.state.hint}

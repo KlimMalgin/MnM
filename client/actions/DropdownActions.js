@@ -5,23 +5,29 @@
 
 var Reflux = require('reflux');
 
-var DropdownActions = {
-    changePhrase: Reflux.createAction(),
+var DropdownActionsCreator = function(config) {
 
-    addTags: Reflux.createAction(),
-    removeTag: Reflux.createAction(),
-    removeLastTag: Reflux.createAction(),
-    receiveCities : Reflux.createAction(),
-    clearFocus: Reflux.createAction(),
-    nextFocused: Reflux.createAction(),
-    prevFocused: Reflux.createAction(),
+    return Reflux.createActions.createActions([
+        'changePhrase',
 
-    updateItems: Reflux.createAction(),
+        'addTags',
+        'removeTag',
+        'removeLastTag',
+        'receiveCities',
+        'clearFocus',
+        'nextFocused',
+        'prevFocused',
 
-    enableFieldFocus: Reflux.createAction(),
-    disableFieldFocus: Reflux.createAction(),
+        'updateItems',
 
-    completePhrase: Reflux.createAction()
+        'enableFieldFocus',
+        'disableFieldFocus',
+
+        'completePhrase'
+    ].map(function(item) {
+        return item + config.uid;
+    }));
+
 };
 
-module.exports = DropdownActions;
+module.exports = DropdownActionsCreator;

@@ -11,8 +11,6 @@ var merge = require('react/lib/merge');
 var storeGet = require('../../utils/storeGet'),
     pLens = require('../../utils/lens');
 
-var DropdownActions = require('../../actions/DropdownActions');
-
 var _mapValues = function(xs) {
     return xs.map(function(city) {
         return merge(city, {
@@ -30,7 +28,7 @@ var _createCitiesOption = function (arr) {
  * Хранилище. При обновлении значения бросает событие изменения
  *
  */
-var DataStore = Reflux.createStore({
+/*var DataStore = Reflux.createStore({
     init: function () {
 
         // TODO: Раньше поле называлось cities. Могут быть несовпадения по именам в Dropdown
@@ -53,6 +51,35 @@ var DataStore = Reflux.createStore({
         this.update(_createCitiesOption(cities));
     }
 
-});
+});*/
 
-module.exports = DataStore;
+var DataStoreCreator = function(config) {
+    var uid = config.uid;
+
+    return new (function() {
+        return Reflux.createStore({
+            init: function () {
+                this.items = Option.from([]);
+
+                this.listenTo(config.DropdownActions['receiveCities' + uid], this.handleReceiveCities);
+            },
+
+            getDefaultData: function() {
+                return this.items;
+            },
+
+            update : function(items) {
+                DropdownActions['updateItems' + uid](this.items = items);
+                this.trigger(this.items);
+            },
+
+            handleReceiveCities: function(data) {
+                var cities = pLens('cities').run(data).chain(storeGet).map(_mapValues).getOrElse([]);
+                this.update(_createCitiesOption(cities));
+            }
+
+        });
+    })();
+};
+
+module.exports = DataStoreCreator;
