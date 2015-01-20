@@ -9,10 +9,9 @@ var DocumentListenerMixin = {
 
     componentDidMount: function () {
         this._onDocumentClickListener =
-            EventListener.listen(document, 'click', this.handleDocumentClick ||
-            function () {
-                console.info("handleDocumentClick не реализован. %o", arguments);
-            });
+            EventListener.listen(document, 'click', (function(e) {
+                this.handleDocumentClick(this.cmCfg.uid, e);
+            }).bind(this));
     },
 
     componentWillUnmount: function () {

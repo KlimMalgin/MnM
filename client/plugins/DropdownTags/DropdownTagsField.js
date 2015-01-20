@@ -23,6 +23,7 @@ var LensedStateMixin = require('react-lensed-state');
 
 
 var DropdownTagsFieldCreator = function(config) {
+    var ElementUniqueClass = 'field-uid-' + config.uid;
 
     return React.createClass({
 
@@ -102,7 +103,7 @@ var DropdownTagsFieldCreator = function(config) {
         },
 
         onFieldFocusChanged: function (fieldFocus) {
-            fieldFocus && document.getElementsByClassName('dropdown-tags-input')[0].focus();
+            fieldFocus && document.getElementsByClassName(ElementUniqueClass)[0].focus();
         },
 
         handleClickTag: function (e) {
@@ -217,6 +218,8 @@ var DropdownTagsFieldCreator = function(config) {
                 'dropdown-tags-input'   : true,
                 'visible'               : !this.props.disable
             };
+            inputFieldCls[ElementUniqueClass] = true;
+
 
             var fieldValueLink = {
                 value: this.state.value,

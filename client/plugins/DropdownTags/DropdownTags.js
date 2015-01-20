@@ -6,8 +6,10 @@
 
 var Option = require('fantasy-options').Option;
 
-var React = require('react'),
+var React = require('react/addons'),
     merge = require('react/lib/merge');
+
+var cs = React.addons.classSet;
 
 var DocumentListenerMixin = require('../../mixins/DropdownTags/DocumentListenerMixin');
 var FieldMixin = require('../../mixins/FieldMixin');
@@ -97,7 +99,7 @@ var DropdownTagsCreator = function (config) {
                 };
             },
 
-            handleDocumentClick: function (e) {
+            handleDocumentClick: function (firedUid, e) {
                 if (isDropdown(e.target, 1, 6)) {
                     config.DropdownActions['enableFieldFocus' + config.uid]();
                 } else {
@@ -109,7 +111,7 @@ var DropdownTagsCreator = function (config) {
                  */
                 function isDropdown(el, iter, stop) {
                     iter = iter || 1;
-                    return el.classList && el.classList.contains("dropdown-tags") ? true :
+                    return el.classList && el.classList.contains("base-uid-" + firedUid) ? true :
                         iter < stop && !!el.parentNode ?
                             isDropdown(el.parentNode, ++iter, stop) : false;
                 }
@@ -187,11 +189,16 @@ var DropdownTagsCreator = function (config) {
                     },
                     pluginState = {
                         arrow: !!this.state.items.getOrElse([]).length
-                    };
+                    },
+                    cls = {};
+
+                cls['dropdown-tags'] = true;
+                cls['form-group'] = true;
+                cls['base-uid-' + config.uid] = true;
 
                 return (
-                    <div className="dropdown-tags form-group">
-                {MessagePlugin(this.state.message)}
+                    <div className={cs(cls)}>
+                        {MessagePlugin(this.state.message)}
                         <LabelPlugin>{this.props.field.label}</LabelPlugin>
                         <ComboBoxField
                             className="form-control"
