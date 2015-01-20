@@ -58,11 +58,6 @@ var DropdownTagsCreator = function (config) {
         config.DataStore = config.DataStoreCreator(config);
         config.PhraseStore = PhraseStoreCreator(config);
 
-        //var FieldFocusStore = config.FieldFocusStore;
-        //var FocusedStore = config.FocusedStore;
-        //var DataStore = config.DataStoreCreator(config);
-        //var PhraseStore = PhraseStoreCreator(config);
-
         var ComboBoxField = DropdownTagsField(config);
         var ComboBoxList = config.ItemsListCreator(config);
 
