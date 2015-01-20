@@ -146,7 +146,7 @@ var DropdownTagsCreator = function (config) {
             getListActions: function () {
                 return {
                     addTags: function (itemName) {
-                        config.DropdownActions['addTags' + config.uid](itemName);
+                        config.DropdownActions['addTags' + config.uid](config.Item.createByText(itemName), false);
                         config.DropdownActions['clearFocus' + config.uid]();
                         config.DropdownActions['changePhrase' + config.uid](Option.from(""));
                     }

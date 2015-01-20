@@ -28,31 +28,6 @@ var _createCitiesOption = function (arr) {
  * Хранилище. При обновлении значения бросает событие изменения
  *
  */
-/*var DataStore = Reflux.createStore({
-    init: function () {
-
-        // TODO: Раньше поле называлось cities. Могут быть несовпадения по именам в Dropdown
-        this.items = Option.from([]);
-
-        this.listenTo(DropdownActions.receiveCities, this.handleReceiveCities);
-    },
-
-    getDefaultData: function() {
-        return this.items;
-    },
-
-    update : function(items) {
-        DropdownActions.updateItems(this.items = items);
-        this.trigger(this.items);
-    },
-
-    handleReceiveCities: function(data) {
-        var cities = pLens('cities').run(data).chain(storeGet).map(_mapValues).getOrElse([]);
-        this.update(_createCitiesOption(cities));
-    }
-
-});*/
-
 var DataStoreCreator = function(config) {
     var uid = config.uid;
 
@@ -70,6 +45,7 @@ var DataStoreCreator = function(config) {
 
             update : function(items) {
                 DropdownActions['updateItems' + uid](this.items = items);
+                console.info('DataStore: %o', this.items);
                 this.trigger(this.items);
             },
 

@@ -8,8 +8,6 @@ var Option = require('fantasy-options').Option;
 var Reflux = require('reflux');
 var merge = require('react/lib/merge');
 
-//var DropdownActions = require('../actions/DropdownActions');
-
 var ComboBoxItemsStoreCreator = function (config) {
     var Actions = config.ComboBoxItemsActions,
         uid = config.uid;
@@ -32,8 +30,8 @@ var ComboBoxItemsStoreCreator = function (config) {
 
         update : function(compose) {
             this.compose = compose;
-            // TODO: При наличии нескольких контролов на странице, все они будут реагировать на это событие. Нужно продумать разделение реакции, чтобы каждый реагировал только на свое событие
             config.DropdownActions['updateItems' + uid](this.compose.items);
+            console.info('ComboBoxItemsStore: %o', this.compose.items);
             this.trigger(this.compose);
         },
 
@@ -42,7 +40,6 @@ var ComboBoxItemsStoreCreator = function (config) {
         },
 
         handleReceiveItems: function(data) {
-            //this.update(Option.from(data.result));
             this.update({
                 items: Option.from(data.result)
             });

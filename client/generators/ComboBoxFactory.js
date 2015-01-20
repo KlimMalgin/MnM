@@ -38,7 +38,21 @@ var ComboBoxFactory = function (ComboBoxType) {
              * Конструктор компонента выпадающего списка, который будет
              * использован при генерации текущего контрола
              */
-            ItemsListCreator: ComboBoxListCreator
+            ItemsListCreator: ComboBoxListCreator,
+
+
+            Item: {
+                createByText: function(text) {
+                    return {
+                        text: text,
+                        custom: true
+                    };
+                },
+                findByText: function() {},
+                renderer: function(tagItem, handlers, displayText, cls) {
+                    return <span onClick={handlers.onClick} className={cls}>{displayText}</span>;
+                }
+            }
         })
 
     };

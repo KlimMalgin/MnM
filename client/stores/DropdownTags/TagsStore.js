@@ -4,6 +4,7 @@
 'use strict';
 
 var Reflux = require('reflux');
+var merge = require('react/lib/merge');
 //var DropdownActions = require('../../actions/DropdownActions');
 
 /**
@@ -26,14 +27,16 @@ var TagsStoreCreator = function(config) {
         },
 
         update : function(tags) {
+            console.info('TagsStore: %o', tags);
             this.trigger(this.tags = tags);
         },
 
-        handleTagAdded: function (tagName, isCustomTag) {
-            this.update(this.tags.concat([{
-                name: tagName,
-                custom: !!isCustomTag
-            }]));
+        handleTagAdded: function (tagItem, isCustomTag) {
+            this.update(this.tags.concat([
+                merge(tagItem, {
+                    custom: !!isCustomTag
+                })
+            ]));
         },
 
         handleTagRemoved: function (tag) {
@@ -41,7 +44,7 @@ var TagsStoreCreator = function(config) {
                 ln = tags.length;
 
             for (var i = 0; i < ln; i++) {
-                if (tags[i].name === tag) {
+                if (tags[i] == tag) {
                     tags.splice(i, 1);
                     break;
                 }

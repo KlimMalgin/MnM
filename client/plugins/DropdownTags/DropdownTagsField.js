@@ -30,7 +30,8 @@ var DropdownTagsFieldCreator = function(config) {
         mixins: [
             ListenerMixin,
             LensedStateMixin,
-            Reflux.listenTo(config.FieldFocusStore, 'onFieldFocusChanged')
+            Reflux.listenTo(config.FieldFocusStore, 'onFieldFocusChanged'),
+            Reflux.connect(config.DataStore)
         ],
 
         propTypes : {
@@ -80,7 +81,8 @@ var DropdownTagsFieldCreator = function(config) {
                 hint: "",
                 value: "",
                 disable: false,
-                input_width: 1
+                input_width: 1,
+                items: Option.of([])
             };
         },
 
@@ -106,12 +108,13 @@ var DropdownTagsFieldCreator = function(config) {
             fieldFocus && document.getElementsByClassName(ElementUniqueClass)[0].focus();
         },
 
-        handleClickTag: function (e) {
-            this.props.actions.removeTag(e.target.innerText);
+        handleClickTag: function (tag, e) {
+            this.props.actions.removeTag(tag /*e.target.innerText*/);
         },
 
         handleAddCustomValue: function () {
-            this.props.actions.addTags(this.state.value, true);
+            //this.props.actions.addTags(this.state.value, true);
+            this.props.actions.addTags(config.Item.createByText(this.state.value), true);
             this.props.actions.clearFocused();
             this.props.valueLink.requestChange(Option.from(""));
         },
@@ -123,7 +126,9 @@ var DropdownTagsFieldCreator = function(config) {
 
             var phrase = this.props.phrase.getOrElse(""),
                 hint = this.props.hint.getOrElse(""),
-                focused = this.props.focused.getOrElse(-1);
+                focused = this.props.focused.getOrElse(-1),
+                // ==
+                items = this.state.items.getOrElse([]);
 
             // Клавиша TAB
             if (e.keyCode === 9) {
@@ -138,12 +143,14 @@ var DropdownTagsFieldCreator = function(config) {
             // Клавиша Enter
             if (e.keyCode === 13 && srcValue.length > 0) {
                 if (focused >= 0) {
-                    this.props.actions.addTags(value);
+                    //this.props.actions.addTags(value);
+                    this.props.actions.addTags(items[focused]);
                     this.props.actions.clearFocused();
                     this.props.valueLink.requestChange(Option.from(""));
                 } else {
                     if (this.state.value.length && this.state.hint.length) {
-                        this.props.actions.addTags(this.state.value + this.state.hint);
+                        //this.props.actions.addTags(this.state.value + this.state.hint);
+                        this.props.actions.addTags(items[0]);
                         this.props.actions.clearFocused();
                         this.props.valueLink.requestChange(Option.from(""));
                     }
@@ -187,7 +194,9 @@ var DropdownTagsFieldCreator = function(config) {
                     tag: true,
                     custom: tag.custom
                 };
-                return <span onClick={that.handleClickTag} className={cs(tagCls)}>{tag.name}</span>;
+                return config.Item.renderer(tag, {
+                    onClick: that.handleClickTag.bind(that, tag)
+                }, tag[config.DisplayProperty], cs(tagCls));
             });
         },
 
