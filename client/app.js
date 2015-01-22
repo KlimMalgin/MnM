@@ -4,6 +4,7 @@
  */
 'use strict';
 
+// Kato notify test
 
 var React = require('react'),
     Router = require('./components/Router');
